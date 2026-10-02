@@ -1,0 +1,250 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.register {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 32px 24px;
+  background: #1b3a30;
+}
+
+.register app-language-switcher {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
+.register__card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 340px;
+  max-width: 100%;
+  margin: 0;
+  padding: 18px 18px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px);
+}
+
+.register__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.register__subtitle {
+  margin: 0;
+  color: #a0a0a0;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: normal;
+  text-align: center;
+}
+
+.roles {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.roles__title {
+  margin: 0;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.roles__options {
+  display: flex;
+  gap: 10px;
+}
+
+.role {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.role--selected {
+  border: 1.5px solid #e9c46a;
+  background: rgba(233, 196, 106, 0.15);
+}
+
+.role__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 32px;
+}
+
+.role__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.role--selected .role__icon {
+  background: #e9c46a;
+}
+
+.role__icon img,
+.role__check img,
+.field__toggle img {
+  display: block;
+}
+
+.role__check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  background: #e9c46a;
+}
+
+.role__name {
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.role__text {
+  color: #a0a0a0;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.register__fields,
+.register__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field__label {
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.field__control {
+  display: flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid rgba(45, 106, 79, 0.3);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.field__control:focus-within {
+  border-color: #e9c46a;
+}
+
+.field__control input {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: #ffffff;
+  font: 400 14px/normal "Geist", sans-serif;
+}
+
+.field__control input::placeholder {
+  color: #a0a0a0;
+}
+
+.field__toggle {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  margin-left: 10px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.register__submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 34px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 8px;
+  background: #e9c46a;
+  color: #0f1e13;
+  font: 700 14px/normal "Geist", sans-serif;
+  cursor: pointer;
+}
+
+.register__switch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 0;
+  color: #a0a0a0;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.link {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #e9c46a;
+  font: 600 13px/normal "Geist", sans-serif;
+  text-decoration: underline;
+  text-underline-position: from-font;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 480px) {
+  .roles__options {
+    flex-direction: column;
+  }
+}

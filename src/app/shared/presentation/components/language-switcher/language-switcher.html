@@ -1,0 +1,4 @@
+<div class="lang" role="group" [attr.aria-label]="'lang.label' | translate">
+  <button type="button" [class.active]="current() === 'en'" (click)="useLanguage('en')">EN</button>
+  <button type="button" [class.active]="current() === 'es'" (click)="useLanguage('es')">ES</button>
+</div>
