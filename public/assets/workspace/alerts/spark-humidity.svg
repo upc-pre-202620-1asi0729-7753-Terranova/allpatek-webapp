@@ -1,0 +1,11 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="290.453" height="41.4786" viewBox="0 0 290.453 41.4786" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="sparkline-chart">
+<line id="spark-segment-0" x1="0.226653" y1="40.7637" x2="41.2257" y2="27.7659" stroke="#52B788" stroke-width="1.5"/>
+<line id="spark-segment-1" x1="41.33" y1="27.7388" x2="83.331" y2="20.7404" stroke="#52B788" stroke-width="1.5"/>
+<line id="spark-segment-2" x1="83.3271" y1="20.7393" x2="124.324" y2="13.739" stroke="#52B788" stroke-width="1.5"/>
+<line id="spark-segment-3" x1="124.232" y1="13.7621" x2="166.235" y2="0.759854" stroke="#52B788" stroke-width="1.5"/>
+<line id="spark-segment-4" x1="166.58" y1="0.7393" x2="207.576" y2="7.73962" stroke="#52B788" stroke-width="1.5"/>
+<line id="spark-segment-5" x1="207.559" y1="7.73614" x2="249.563" y2="13.7366" stroke="#52B788" stroke-width="1.5"/>
+<line id="spark-segment-6" x1="249.227" y1="13.7637" x2="290.226" y2="0.765893" stroke="#52B788" stroke-width="1.5"/>
+</g>
+</svg>
