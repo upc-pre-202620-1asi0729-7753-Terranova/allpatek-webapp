@@ -1,0 +1,68 @@
+<section class="deposit">
+  <header>
+    <h1>{{ 'deposit.title' | translate }}</h1>
+    <p>{{ 'deposit.subtitle' | translate }}</p>
+  </header>
+
+  <div class="deposit__grid">
+    <article class="face" aria-hidden="true">
+      <header>
+        <span>ALLPATEK</span>
+        <strong>{{ preview().brand }}</strong>
+      </header>
+      <p class="face__number">{{ preview().number }}</p>
+      <footer>
+        <div>
+          <small>{{ 'deposit.holder' | translate }}</small>
+          <b>{{ preview().holder }}</b>
+        </div>
+        <div>
+          <small>{{ 'deposit.expiry' | translate }}</small>
+          <b>{{ preview().expiry }}</b>
+        </div>
+        <div>
+          <small>{{ 'deposit.amount' | translate }}</small>
+          <b class="face__amount">{{ preview().amount }}</b>
+        </div>
+      </footer>
+    </article>
+
+    <form class="panel" [formGroup]="form" (submit)="confirm($event)">
+      <h2>{{ 'deposit.card' | translate }}</h2>
+      <p>{{ 'deposit.constant' | translate }}</p>
+      @if (invalid()) {
+        <p class="error">{{ 'deposit.invalid' | translate }}</p>
+      } @else if (failed()) {
+        <p class="error">{{ 'deposit.failed' | translate }}</p>
+      }
+      <label>
+        {{ 'deposit.amount' | translate }}
+        <span class="control">
+          <b>S/</b>
+          <input type="text" inputmode="decimal" formControlName="amount" placeholder="0.00" autocomplete="off" />
+        </span>
+      </label>
+      <label>
+        {{ 'deposit.number' | translate }}
+        <input type="text" inputmode="numeric" formControlName="number" placeholder="•••• •••• •••• ••••" autocomplete="off" />
+      </label>
+      <label>
+        {{ 'deposit.holder' | translate }}
+        <input type="text" formControlName="holder" [placeholder]="'deposit.holderPlaceholder' | translate" autocomplete="off" />
+      </label>
+      <div class="pair">
+        <label>
+          {{ 'deposit.expiry' | translate }}
+          <input type="text" formControlName="expiry" placeholder="MM/AA" autocomplete="off" />
+        </label>
+        <label>
+          CVV
+          <input type="password" inputmode="numeric" formControlName="cvv" placeholder="123" autocomplete="off" />
+        </label>
+      </div>
+      <p class="secure">{{ 'deposit.secure' | translate }}</p>
+      <button class="confirm" type="submit">{{ 'deposit.confirm' | translate }}</button>
+      <button class="back" type="button" (click)="backToVault()">{{ 'deposit.back' | translate }}</button>
+    </form>
+  </div>
+</section>

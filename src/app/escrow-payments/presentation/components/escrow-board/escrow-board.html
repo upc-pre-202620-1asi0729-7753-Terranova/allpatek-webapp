@@ -1,0 +1,154 @@
+<section class="screen">
+  <header class="screen__intro">
+    <h1>{{ 'escrow.title' | translate }}</h1>
+    <p>{{ 'escrow.subtitle' | translate }}</p>
+  </header>
+
+  <div class="summary" [class.summary--farmer]="audience() === 'farmer'">
+    <article>
+      <header>
+        <p>{{ 'escrow.total' | translate }}</p>
+        <span><img src="assets/workspace/escrow/lock.svg" alt="" width="20" height="20" /></span>
+      </header>
+      <strong class="gold">{{ totals().total }}</strong>
+      <small>{{ 'escrow.activeContracts' | translate: { count: totals().count } }}</small>
+    </article>
+    <article>
+      <header>
+        <p>{{ 'escrow.released' | translate }}</p>
+        <span><img src="assets/workspace/escrow/check.svg" alt="" width="20" height="20" /></span>
+      </header>
+      <strong class="mint">{{ totals().released }}</strong>
+      <small>{{ 'escrow.releasedHint' | translate: { percent: totals().percent } }}</small>
+    </article>
+    @if (audience() === 'merchant') {
+      <article>
+        <header>
+          <p>{{ 'escrow.pending' | translate }}</p>
+          <span><img src="assets/workspace/escrow/clock.svg" alt="" width="20" height="20" /></span>
+        </header>
+        <strong class="amber">{{ totals().pending }}</strong>
+        <small>
+          @if (totals().ready) {
+            {{ 'escrow.readyHint' | translate: { count: totals().ready } }}
+          } @else {
+            {{ 'escrow.pendingHint' | translate: { count: totals().reviews } }}
+          }
+        </small>
+      </article>
+    }
+  </div>
+
+  @if (audience() === 'merchant') {
+    <article class="wallet">
+      @if (balance(); as card) {
+        <div>
+          <p>{{ 'escrow.yourCard' | translate }}</p>
+          <strong>{{ card.brand }} ···· {{ card.last4 }}</strong>
+          <small>{{ card.holder }} · {{ card.expiry }}</small>
+        </div>
+        <div>
+          <p>{{ 'escrow.available' | translate }}</p>
+          <strong class="gold">{{ card.available }}</strong>
+          <small>{{ 'escrow.openingHint' | translate: { opening: card.opening, spent: card.spent } }}</small>
+        </div>
+        <a routerLink="/escrow/deposit">{{ 'escrow.changeCard' | translate }}</a>
+      } @else {
+        <div>
+          <p>{{ 'escrow.addCardTitle' | translate }}</p>
+          <strong>{{ 'escrow.addCardBody' | translate }}</strong>
+        </div>
+        <a routerLink="/escrow/deposit">{{ 'escrow.addCard' | translate }}</a>
+      }
+    </article>
+    @if (notice() === 'card') {
+      <p class="empty">{{ 'escrow.needCard' | translate }}</p>
+    } @else if (notice() === 'funds') {
+      <p class="empty">{{ 'escrow.needFunds' | translate }}</p>
+    }
+  }
+
+  @for (contract of contracts(); track contract.parcelId) {
+    <article class="contract">
+      <header class="contract__head">
+        <h2>{{ (contract.completed ? 'escrow.done' : 'escrow.active') | translate }}</h2>
+        <span class="badge" [class.badge--done]="contract.completed">
+          <img src="assets/workspace/escrow/dot.svg" alt="" width="6" height="6" />
+          {{ (contract.completed ? 'escrow.done' : 'escrow.inProgress') | translate }}
+        </span>
+      </header>
+      <div class="meta">
+        <div>
+          <p>{{ 'escrow.farmer' | translate }}</p>
+          <strong>{{ contract.farmerName || ('contract.unnamed' | translate) }} <em>{{ 'role.farmer' | translate }}</em></strong>
+        </div>
+        <div>
+          <p>{{ 'escrow.merchant' | translate }}</p>
+          <strong>{{ contract.merchantName }} <em class="merchant">{{ 'role.merchant' | translate }}</em></strong>
+        </div>
+        <div>
+          <p>{{ 'escrow.linked' | translate }}</p>
+          <strong>{{ contract.parcelName }}</strong>
+          @if (contract.details) {
+            <small>{{ contract.details }}</small>
+          }
+        </div>
+      </div>
+      <div class="timeline">
+        <h3>{{ 'escrow.timeline' | translate }}</h3>
+        <div class="timeline__row">
+          <p>{{ 'escrow.progress' | translate }} <b>{{ 'escrow.progressValue' | translate: { percent: contract.progress } }}</b></p>
+          <small>{{ contract.progressLabel }}</small>
+        </div>
+        <div class="bar"><span [style.width.%]="contract.progress"></span></div>
+        <div class="milestones">
+          @for (item of contract.milestones; track item.title) {
+            <article [class]="'hito hito--' + item.tone">
+              <header>
+                <h4>{{ item.title | translate }}</h4>
+                <span><img [src]="item.icon" alt="" width="14" height="14" /></span>
+              </header>
+              <p>{{ item.status | translate }}</p>
+              <strong>{{ item.amount }}</strong>
+              <small>{{ item.date | translate }}</small>
+            </article>
+          }
+        </div>
+      </div>
+    </article>
+
+    @if (audience() === 'merchant' && (contract.payoutMilestone || contract.reviewMilestone)) {
+      <div class="merchant">
+        <article>
+          <h2>{{ 'escrow.action' | translate }}</h2>
+          @if (contract.payoutMilestone) {
+            <p>{{ 'escrow.readyBody' | translate: { milestone: (contract.reviewTitle | translate) } }}</p>
+            <div>
+              <button type="button" [disabled]="approving()" (click)="approve(contract)">
+                <img src="assets/workspace/escrow/check.svg" alt="" width="20" height="20" />
+                {{ 'escrow.approve' | translate: { amount: contract.reviewAmount } }}
+              </button>
+            </div>
+          } @else {
+            <p>{{ 'escrow.reviewFirstBody' | translate: { milestone: (contract.reviewTitle | translate) } }}</p>
+            <div>
+              <a routerLink="/evidence/review" [queryParams]="{ parcel: contract.parcelName, parcelId: contract.parcelId, type: 'evidence.activated' }">
+                {{ 'escrow.openReview' | translate }}
+              </a>
+            </div>
+          }
+        </article>
+        <article>
+          <h2>{{ 'escrow.merchantState' | translate }}</h2>
+          <p>{{ (contract.payoutMilestone ? 'escrow.thisShare' : 'escrow.lockedShare') | translate }}</p>
+          <strong>{{ contract.reviewAmount }}</strong>
+        </article>
+      </div>
+    }
+    @if (approvedId() === contract.parcelId) {
+      <p class="approved">{{ 'escrow.approvedNote' | translate }}</p>
+    }
+  } @empty {
+    <p class="empty">{{ 'escrow.empty' | translate }}</p>
+  }
+</section>
