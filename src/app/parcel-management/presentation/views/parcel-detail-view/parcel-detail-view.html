@@ -1,0 +1,8 @@
+@if (parcel(); as item) {
+  <app-parcel-detail [parcel]="item" (request)="openContract()" />
+} @else {
+  <p class="missing">
+    {{ 'parcels.missing' | translate }}
+    <a routerLink="/parcels">{{ 'parcels.back' | translate }}</a>
+  </p>
+}

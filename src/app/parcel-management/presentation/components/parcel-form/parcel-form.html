@@ -1,0 +1,190 @@
+<form class="form" [formGroup]="form" (submit)="onSubmit($event)">
+  <header class="form__intro">
+    <h1>{{ (editing() ? 'form.editTitle' : 'form.title') | translate }}</h1>
+    <p>{{ (editing() ? 'form.editSubtitle' : 'form.subtitle') | translate }}</p>
+    @if (actionError() === 'save') {
+      <p class="form__status">{{ 'parcels.saveError' | translate }}</p>
+    }
+  </header>
+
+  <section class="panel">
+    <h2>
+      <img src="assets/workspace/register/section-general.svg" alt="" width="16" height="16" />
+      {{ 'form.general' | translate }}
+    </h2>
+    <div class="grid grid--2">
+      <label>
+        {{ 'form.name' | translate }}
+        <input type="text" formControlName="name" [placeholder]="'form.namePlaceholder' | translate" />
+      </label>
+      <label>
+        {{ 'form.area' | translate }}
+        <span class="control">
+          <input type="text" formControlName="area" [placeholder]="'form.areaPlaceholder' | translate" />
+          <em>ha</em>
+        </span>
+      </label>
+      <label>
+        {{ 'form.soil' | translate }}
+        <span class="control control--select">
+          <select formControlName="soil">
+            <option value="">{{ 'soil.select' | translate }}</option>
+            <option value="Franco">{{ 'soil.loam' | translate }}</option>
+            <option value="Arcilloso">{{ 'soil.clay' | translate }}</option>
+            <option value="Arenoso">{{ 'soil.sandy' | translate }}</option>
+            <option value="Franco Arenoso">{{ 'soil.sandyLoam' | translate }}</option>
+            <option value="Franco Arcilloso">{{ 'soil.clayLoam' | translate }}</option>
+          </select>
+          <img src="assets/workspace/register/chevron.svg" alt="" width="16" height="16" />
+        </span>
+      </label>
+      <label>
+        {{ 'form.rent' | translate }}
+        <span class="control">
+          <em class="control__currency">S/</em>
+          <input type="text" formControlName="cost" [placeholder]="'form.costPlaceholder' | translate" />
+        </span>
+      </label>
+      <label>
+        {{ 'form.duration' | translate }}
+        <span class="control">
+          <input type="number" min="7" formControlName="duration" [placeholder]="'form.durationPlaceholder' | translate" />
+          <em>{{ 'form.monthsUnit' | translate }}</em>
+        </span>
+        @if (form.controls.duration.touched && form.controls.duration.hasError('min')) {
+          <small class="form__status">{{ 'form.durationError' | translate }}</small>
+        }
+      </label>
+      <label>
+        {{ 'form.startMonth' | translate }}
+        <span class="control control--select">
+          <select formControlName="startMonth" [class.is-set]="form.controls.startMonth.value">
+            <option value="">{{ 'form.select' | translate }}</option>
+            @for (month of months; track month) {
+              <option [value]="month">{{ ('form.month.' + month) | translate }}</option>
+            }
+          </select>
+          <img src="assets/workspace/register/chevron.svg" alt="" width="16" height="16" />
+        </span>
+        @if (form.hasError('futureStart') && (form.controls.startMonth.touched || form.controls.startYear.touched)) {
+          <small class="form__status">{{ 'form.startError' | translate }}</small>
+        }
+      </label>
+      <label>
+        {{ 'form.startYear' | translate }}
+        <input type="number" min="2026" formControlName="startYear" placeholder="2026" />
+        @if (form.controls.startYear.touched && form.controls.startYear.hasError('min')) {
+          <small class="form__status">{{ 'form.yearError' | translate }}</small>
+        }
+      </label>
+      <label class="crops">
+        {{ 'form.crops' | translate }}
+        <span class="crops__entry">
+          <input
+            type="text"
+            [value]="cropDraft()"
+            [placeholder]="'form.cropPlaceholder' | translate"
+            (input)="cropDraft.set($any($event.target).value)"
+            (keydown.enter)="addCrop($event)"
+          />
+          <button type="button" (click)="addCrop($event)">{{ 'form.addCrop' | translate }}</button>
+        </span>
+        @if (crops().length) {
+          <span class="crops__list">
+            @for (crop of crops(); track crop) {
+              <span>
+                {{ crop }}
+                <button type="button" (click)="removeCrop(crop)" [attr.aria-label]="'form.removeCrop' | translate">×</button>
+              </span>
+            }
+          </span>
+        }
+        @if (cropError()) {
+          <small class="form__status">{{ 'form.cropError' | translate }}</small>
+        }
+      </label>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>
+      <img src="assets/workspace/register/section-gps.svg" alt="" width="16" height="16" />
+      {{ 'form.geo' | translate }}
+    </h2>
+    <label class="department">
+      {{ 'form.department' | translate }}
+      <span class="control control--select">
+        <select [value]="department()" [class.is-set]="department()" (change)="useDepartment($event)">
+          <option value="">{{ 'form.select' | translate }}</option>
+          @for (place of departments; track place.name) {
+            <option [value]="place.name">{{ place.name }}</option>
+          }
+        </select>
+        <img src="assets/workspace/register/chevron.svg" alt="" width="16" height="16" />
+      </span>
+    </label>
+    <div class="coords">
+      <label>
+        {{ 'form.latitude' | translate }}
+        <input type="text" formControlName="latitude" placeholder="-12.0654" />
+      </label>
+      <label>
+        {{ 'form.longitude' | translate }}
+        <input type="text" formControlName="longitude" placeholder="-75.2049" />
+      </label>
+      <button class="locate" type="button" (click)="locate()">
+        <img src="assets/workspace/register/locate.svg" alt="" width="16" height="16" />
+        {{ 'form.locate' | translate }}
+      </button>
+    </div>
+    @if (locateError()) {
+      <p class="form__status">{{ 'form.locateError' | translate }}</p>
+    }
+    <iframe class="map" [src]="mapUrl()" [title]="'form.map' | translate"></iframe>
+  </section>
+
+  <section class="panel">
+    <h2>
+      <img src="assets/workspace/register/section-photos.svg" alt="" width="16" height="16" />
+      {{ 'form.photos' | translate }}
+    </h2>
+    <input #fileInput class="file" type="file" accept="image/png,image/jpeg" multiple (change)="addFiles($event)" />
+    <div
+      class="dropzone"
+      [class.dropzone--over]="dragging()"
+      (click)="pickPhotos()"
+      (dragover)="onDrag($event)"
+      (dragleave)="onDragLeave()"
+      (drop)="onDrop($event)"
+    >
+      <img src="assets/workspace/register/upload.svg" alt="" width="24" height="24" />
+      <strong>{{ 'form.dropTitle' | translate }}</strong>
+      <span>{{ 'form.dropHint' | translate }}</span>
+      <small>{{ 'form.dropMeta' | translate }}</small>
+    </div>
+    @if (photoError()) {
+      <p class="form__status">{{ 'form.photoError' | translate }}</p>
+    }
+    <div class="thumbs">
+      @for (photo of photos(); track $index) {
+        <figure class="thumb" [class.thumb--main]="$first">
+          <button class="thumb__open" type="button" (click)="makeMain($index)" [attr.aria-label]="'form.setMain' | translate">
+            <img [src]="photo" alt="" />
+          </button>
+          <button type="button" (click)="removePhoto($index)" [attr.aria-label]="'form.removePhoto' | translate">×</button>
+          @if ($first) {
+            <figcaption>{{ 'form.mainPhoto' | translate }}</figcaption>
+          }
+        </figure>
+      }
+      @if (photos().length < 8) {
+        <button class="thumb thumb--add" type="button" (click)="pickPhotos()" [attr.aria-label]="'form.addPhoto' | translate">+</button>
+      }
+    </div>
+  </section>
+
+  <div class="form__actions">
+    <button class="cancel" type="button" (click)="cancelForm()">{{ 'form.cancel' | translate }}</button>
+    <button class="save" type="submit">{{ (editing() ? 'form.update' : 'form.save') | translate }}</button>
+  </div>
+</form>
