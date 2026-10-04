@@ -10,6 +10,8 @@ const pageNotFound = () =>
 const profile = () => import('./shared/presentation/components/profile/profile').then((m) => m.Profile);
 const agreementRoutes = () =>
   import('./agreements-management/presentation/agreement.routes').then((m) => m.agreementRoutes);
+const alertRoutes = () =>
+  import('./alerts-management/presentation/alert.routes').then((m) => m.alertRoutes);
 
 const baseTitle = 'Allpatek';
 
@@ -23,6 +25,7 @@ export const routes: Routes = [
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'profile' },
       { path: 'agreements', loadChildren: agreementRoutes },
+      { path: 'alerts', loadChildren: alertRoutes },
       { path: 'profile', loadComponent: profile, title: `${baseTitle} - Perfil` },
     ],
   },
