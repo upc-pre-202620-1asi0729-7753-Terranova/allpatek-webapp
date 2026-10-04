@@ -1,0 +1,62 @@
+<section class="screen">
+  <header class="screen__intro">
+    <h1>{{ 'evidence.uploadTitle' | translate }}</h1>
+    <p>{{ parcel() }} · {{ kind() | translate }}</p>
+  </header>
+
+  <section class="timeline">
+    <h2>{{ 'evidence.selectMilestone' | translate }}</h2>
+    <p>{{ 'evidence.selectHint' | translate }}</p>
+    <div class="milestones">
+      @for (item of milestones(); track item.title) {
+        <article [class]="'hito hito--' + item.tone">
+          <header>
+            <h3>{{ item.title | translate }}</h3>
+            <span><img [src]="item.icon" alt="" width="14" height="14" /></span>
+          </header>
+          <p>{{ item.status | translate }}</p>
+          <strong>{{ item.amount }}</strong>
+          <small>{{ item.date | translate }}</small>
+        </article>
+      }
+    </div>
+  </section>
+
+  <form class="form" (submit)="onSubmit($event)">
+    <h2>{{ 'evidence.details' | translate }} {{ parcel() }}</h2>
+    <div class="drop">
+      <p>{{ 'evidence.files' | translate }}</p>
+      <input #fileInput class="file" type="file" accept="image/png,image/jpeg,application/pdf" (change)="addFile($event)" />
+      <button class="drop__target" type="button" (click)="pickFile()">
+        @if (image().startsWith('data:image')) {
+          <img class="drop__preview" [src]="image()" alt="" />
+        } @else {
+          <span><img src="assets/workspace/evidence/upload.svg" alt="" width="28" height="28" /></span>
+        }
+        <strong>{{ fileName() || ('evidence.drop' | translate) }}</strong>
+        <small>{{ 'evidence.formats' | translate }}</small>
+      </button>
+    </div>
+    <label>
+      {{ 'evidence.notes' | translate }}
+      <textarea
+        [value]="notes()"
+        [placeholder]="'evidence.notesPlaceholder' | translate"
+        (input)="notes.set($any($event.target).value)"
+      ></textarea>
+    </label>
+    @if (error()) {
+      <p class="form__status">{{ 'evidence.fileError' | translate }}</p>
+    }
+    @if (sent()) {
+      <p class="form__sent">{{ 'evidence.sentMerchant' | translate }}</p>
+    }
+    @if (open() == null && !sent()) {
+      <p class="form__sent">{{ 'evidence.waitMerchant' | translate }}</p>
+    }
+    <div class="actions">
+      <button class="cancel" type="button" (click)="close.emit()">{{ 'evidence.cancel' | translate }}</button>
+      <button class="save" type="submit" [disabled]="open() == null">{{ 'evidence.submit' | translate }}</button>
+    </div>
+  </form>
+</section>
