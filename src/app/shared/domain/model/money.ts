@@ -1,4 +1,3 @@
-/** Reads amounts typed as 45000, 45,000.00 or S/ 45,000.00. */
 export function parseMoney(value: string): number {
   const cleaned = value.replace(/[^\d,.]/g, '');
   if (!cleaned) {
@@ -29,4 +28,11 @@ export function shareCents(value: string): number[] {
   const cents = Math.round(amount * 100);
   const part = Math.floor(cents / 4);
   return [part, part, part, cents - part * 3];
+}
+
+export function moneyShares(value: string): string[] {
+  if (!Number.isFinite(parseMoney(value))) {
+    return ['—', '—', '—', '—'];
+  }
+  return shareCents(value).map((share) => formatMoney(share / 100));
 }

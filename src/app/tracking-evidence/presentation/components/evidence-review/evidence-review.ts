@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, Component, computed, inject, input } from '@an
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ProfileStore } from '../../../../shared/application/profile.store';
-import { contractCode } from '../../../domain/model/contract-code';
-import { moneyShares } from '../../../domain/model/money';
+import { contractCode } from '../../../../shared/domain/model/contract-code';
+import { moneyShares } from '../../../../shared/domain/model/money';
 import { EvidenceStore } from '../../../application/evidence.store';
 const TITLES = ['escrow.m1', 'escrow.m2', 'escrow.m3', 'escrow.m4'];
 

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, ElementRef, inject, input, output, signal, viewChild } from '@angular/core';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { contractCode } from '../../../domain/model/contract-code';
-import { moneyShares } from '../../../domain/model/money';
+import { contractCode } from '../../../../shared/domain/model/contract-code';
+import { moneyShares } from '../../../../shared/domain/model/money';
 import { ProfileStore } from '../../../../shared/application/profile.store';
 import { environment } from '../../../../../environments/environment';
 import { EvidenceStore } from '../../../application/evidence.store';

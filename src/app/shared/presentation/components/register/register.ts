@@ -4,12 +4,10 @@ import { Logo } from '../logo/logo';
 import { LanguageSwitcher } from '../language-switcher/language-switcher';
 import { ProfileStore } from '../../../application/profile.store';
 import { SessionStore } from '../../../application/session.store';
-import { UserApi } from '../../../infrastructure/user-api';
 import { TranslatePipe } from '@ngx-translate/core';
 
 /**
- * Registration screen. The chosen role opens that account.
- * The typed fields are not used as credentials.
+ * Role picker. Fields stay visible; submit opens the seeded account for that role.
  */
 @Component({
   selector: 'app-register',
@@ -22,7 +20,6 @@ export class Register {
   readonly #router = inject(Router);
   readonly #session = inject(SessionStore);
   readonly #profiles = inject(ProfileStore);
-  readonly #users = inject(UserApi);
 
   protected readonly role = signal<'agricultor' | 'comerciante'>('agricultor');
   protected readonly fullName = signal('');
@@ -59,22 +56,11 @@ export class Register {
   protected onSubmit(event: Event): void {
     event.preventDefault();
     const role = this.role();
-    this.#users.findByRole(role).subscribe({
-      next: (user) => {
-        this.#session.enter(
-          user?.role ?? role,
-          user?.fullName || this.fullName() || role,
-          user?.profileId ?? (role === 'comerciante' ? 2 : 1),
-        );
-        this.#profiles.reload();
-        void this.#router.navigate(['/profile']);
-      },
-      error: () => {
-        this.#session.enter(role, this.fullName() || role, role === 'comerciante' ? 2 : 1);
-        this.#profiles.reload();
-        void this.#router.navigate(['/profile']);
-      },
-    });
+    const profileId = role === 'comerciante' ? 2 : 1;
+    const name = this.fullName().trim() || role;
+    this.#session.enter(role, name, profileId);
+    this.#profiles.reload();
+    void this.#router.navigate(['/parcels']);
   }
 
   protected openLogin(): void {

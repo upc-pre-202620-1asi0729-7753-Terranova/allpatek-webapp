@@ -6,8 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { map, startWith } from 'rxjs';
 import { ProfileStore } from '../../../../shared/application/profile.store';
+import { formatMoney, parseMoney } from '../../../../shared/domain/model/money';
 import { ParcelStore } from '../../../application/parcel.store';
-import { formatMoney, parseMoney } from '../../../domain/model/money';
 import { Parcel } from '../../../domain/model/parcel.entity';
 
 /** Department capitals. Choosing one only moves the map; it is not stored. */

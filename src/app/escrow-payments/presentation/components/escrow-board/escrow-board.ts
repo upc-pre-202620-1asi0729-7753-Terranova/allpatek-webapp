@@ -6,8 +6,8 @@ import { map } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
 import { EscrowStore } from '../../../application/escrow.store';
 import { WalletStore } from '../../../application/wallet.store';
-import { contractCode } from '../../../domain/model/contract-code';
-import { formatMoney, parseMoney, shareCents } from '../../../domain/model/money';
+import { contractCode } from '../../../../shared/domain/model/contract-code';
+import { formatMoney, parseMoney, shareCents } from '../../../../shared/domain/model/money';
 import { ProfileStore } from '../../../../shared/application/profile.store';
 import { SessionStore } from '../../../../shared/application/session.store';
 

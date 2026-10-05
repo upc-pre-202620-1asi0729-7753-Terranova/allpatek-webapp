@@ -3,7 +3,6 @@
   "role": {
     "farmer": "Agricultor",
     "merchant": "Comerciante",
-    "merchantB2b": "Comerciante B2B",
     "smartFarmer": "Agricultor Inteligente",
     "custodian": "Comerciante Custodio"
   },
