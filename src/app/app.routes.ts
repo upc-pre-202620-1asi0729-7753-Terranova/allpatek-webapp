@@ -8,6 +8,8 @@ const register = () =>
 const pageNotFound = () =>
   import('./shared/presentation/views/page-not-found/page-not-found').then((m) => m.PageNotFound);
 const profile = () => import('./shared/presentation/components/profile/profile').then((m) => m.Profile);
+const agreementRoutes = () =>
+  import('./agreements-management/presentation/agreement.routes').then((m) => m.agreementRoutes);
 
 const baseTitle = 'Allpatek';
 
@@ -20,6 +22,7 @@ export const routes: Routes = [
     canActivate: [requireSession],
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'profile' },
+      { path: 'agreements', loadChildren: agreementRoutes },
       { path: 'profile', loadComponent: profile, title: `${baseTitle} - Perfil` },
     ],
   },

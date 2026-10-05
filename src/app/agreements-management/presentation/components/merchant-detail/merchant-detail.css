@@ -1,0 +1,146 @@
+.screen {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px 12px 8px;
+}
+
+.screen__intro h1,
+.identity h2,
+.sheet h2 {
+  margin: 0;
+  color: #ffffff;
+}
+
+.screen__intro h1 {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.screen__intro p,
+.identity p,
+.empty {
+  margin: 10px 0 0;
+  color: #9ca3af;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.identity,
+.sheet {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.identity {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 18px;
+}
+
+.identity__avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 24px;
+  background: #3b82f6;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.identity h2 {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.badge {
+  display: inline-flex;
+  margin-top: 8px;
+  padding: 3px 10px;
+  border: 1px solid #e9c46a;
+  border-radius: 100px;
+  background: #2d6a4f;
+  color: #e9c46a;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.sheet {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px 18px;
+}
+
+.sheet h2 {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.sheet dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 24px;
+  margin: 0;
+}
+
+.sheet dt,
+.sheet dd {
+  margin: 0;
+}
+
+.sheet dt {
+  color: #9ca3af;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.sheet dd {
+  margin-top: 6px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.actions a,
+.actions button {
+  height: 32px;
+  border-radius: 8px;
+  font: 700 13px/32px Inter, sans-serif;
+  text-decoration: none;
+}
+
+.actions a {
+  padding: 0 14px;
+  border: 1px solid #2d6a4f;
+  color: #52b788;
+}
+
+.actions button {
+  padding: 0 14px;
+  border: 0;
+  background: #e9c46a;
+  color: #0f1e13;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 860px) {
+  .sheet dl {
+    grid-template-columns: 1fr;
+  }
+}

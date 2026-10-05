@@ -1,0 +1,68 @@
+<section class="screen">
+  <header class="screen__intro">
+    <h1>{{ 'contract.merchantTitle' | translate }}</h1>
+    <p>{{ 'contract.merchantSubtitle' | translate }}</p>
+  </header>
+
+  @if (request(); as agreement) {
+    <article class="identity">
+      <span class="identity__avatar">{{ initials() || '—' }}</span>
+      <div>
+        <h2>{{ merchant()?.fullName || agreement.merchantName }}</h2>
+        <span class="badge">{{ 'role.merchant' | translate }}</span>
+        @if (parcel(); as parcel) {
+          <p>{{ parcel.name }} · {{ parcel.campaignCost || '—' }}</p>
+        }
+      </div>
+    </article>
+
+    <article class="sheet">
+      <h2>{{ 'contract.commercial' | translate }}</h2>
+      <dl>
+        <div>
+          <dt>{{ 'contract.company' | translate }}</dt>
+          <dd>{{ shown(merchant()?.company) || ('contract.missing' | translate) }}</dd>
+        </div>
+        <div>
+          <dt>{{ 'contract.ruc' | translate }}</dt>
+          <dd>{{ shown(merchant()?.ruc) || ('contract.missing' | translate) }}</dd>
+        </div>
+        <div>
+          <dt>{{ 'contract.activity' | translate }}</dt>
+          <dd>{{ shown(merchant()?.activity) || ('contract.missing' | translate) }}</dd>
+        </div>
+      </dl>
+    </article>
+
+    <article class="sheet">
+      <h2>{{ 'contract.contact' | translate }}</h2>
+      <dl>
+        <div>
+          <dt>{{ 'profile.phone' | translate }}</dt>
+          <dd>{{ shown(merchant()?.phone) || ('contract.missing' | translate) }}</dd>
+        </div>
+        <div>
+          <dt>{{ 'profile.document' | translate }}</dt>
+          <dd>{{ shown(merchant()?.document) || ('contract.missing' | translate) }}</dd>
+        </div>
+        <div>
+          <dt>{{ 'profile.email' | translate }}</dt>
+          <dd>{{ shown(merchant()?.email) || ('contract.missing' | translate) }}</dd>
+        </div>
+        <div>
+          <dt>{{ 'profile.address' | translate }}</dt>
+          <dd>{{ shown(merchant()?.address) || ('contract.missing' | translate) }}</dd>
+        </div>
+      </dl>
+    </article>
+
+    <div class="actions">
+      <a routerLink="/agreements">{{ 'contract.backRequests' | translate }}</a>
+      <button type="button" (click)="openContract()">
+        {{ (agreement.farmerSigned ? 'contract.viewRequest' : 'contract.signRequest') | translate }}
+      </button>
+    </div>
+  } @else {
+    <p class="empty">{{ 'contract.merchantMissing' | translate }}</p>
+  }
+</section>
