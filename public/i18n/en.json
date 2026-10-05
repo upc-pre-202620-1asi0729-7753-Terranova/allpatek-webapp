@@ -3,7 +3,6 @@
   "role": {
     "farmer": "Farmer",
     "merchant": "Merchant",
-    "merchantB2b": "B2B Merchant",
     "smartFarmer": "Smart Farmer",
     "custodian": "Custodian Merchant"
   },
