@@ -16,6 +16,8 @@ const escrowRoutes = () =>
   import('./escrow-payments/presentation/escrow.routes').then((m) => m.escrowRoutes);
 const parcelRoutes = () =>
   import('./parcel-management/presentation/parcel.routes').then((m) => m.parcelRoutes);
+const evidenceRoutes = () =>
+  import('./tracking-evidence/presentation/evidence.routes').then((m) => m.evidenceRoutes);
 
 const baseTitle = 'Allpatek';
 
@@ -32,6 +34,7 @@ export const routes: Routes = [
       { path: 'agreements', loadChildren: agreementRoutes },
       { path: 'alerts', loadChildren: alertRoutes },
       { path: 'escrow', loadChildren: escrowRoutes },
+      { path: 'evidence', loadChildren: evidenceRoutes },
       { path: 'profile', loadComponent: profile, title: `${baseTitle} - Perfil` },
     ],
   },
