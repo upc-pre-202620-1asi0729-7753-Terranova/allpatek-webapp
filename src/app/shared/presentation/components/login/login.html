@@ -1,0 +1,57 @@
+<main class="login">
+  <app-language-switcher />
+  <form class="login__card" novalidate (submit)="onSubmit($event)">
+    <header class="login__header">
+      <app-logo [compact]="true" />
+      <p class="login__subtitle">{{ 'login.subtitle' | translate }}</p>
+    </header>
+
+    <div class="login__fields">
+      <label class="field">
+        <span class="field__label">{{ 'login.email' | translate }}</span>
+        <span class="field__control">
+          <input
+            type="email"
+            name="email"
+            autocomplete="off"
+            [value]="email()"
+            (input)="onEmailInput($event)"
+          />
+        </span>
+      </label>
+
+      <div class="field">
+        <label class="field__label" for="password">{{ 'login.password' | translate }}</label>
+        <span class="field__control">
+          <input
+            id="password"
+            name="password"
+            autocomplete="current-password"
+            [type]="passwordVisible() ? 'text' : 'password'"
+            [value]="password()"
+            (input)="onPasswordInput($event)"
+          />
+          <button
+            class="field__toggle"
+            type="button"
+            aria-label="{{ 'login.showPassword' | translate }}"
+            (click)="togglePasswordVisibility()"
+          >
+            <img src="assets/login/eye.svg" alt="" width="18" height="18" />
+          </button>
+        </span>
+        <div class="field__aside">
+          <button class="link" type="button">{{ 'login.forgot' | translate }}</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="login__actions">
+      <button class="login__submit" type="submit">{{ 'login.submit' | translate }}</button>
+      <p class="login__switch">
+        <span>{{ 'login.noAccount' | translate }}</span>
+        <button class="link link--strong" type="button" (click)="openRegister()">{{ 'login.register' | translate }}</button>
+      </p>
+    </div>
+  </form>
+</main>

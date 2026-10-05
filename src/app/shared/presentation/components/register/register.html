@@ -1,0 +1,133 @@
+<main class="register">
+  <app-language-switcher />
+  <form class="register__card" novalidate (submit)="onSubmit($event)">
+    <header class="register__header">
+      <app-logo [compact]="true" />
+      <p class="register__subtitle">{{ 'register.subtitle' | translate }}</p>
+    </header>
+
+    <section class="roles">
+      <p class="roles__title">{{ 'register.roleTitle' | translate }}</p>
+      <div class="roles__options">
+        <button
+          class="role"
+          type="button"
+          [class.role--selected]="role() === 'agricultor'"
+          (click)="role.set('agricultor')"
+        >
+          <span class="role__top">
+            <span class="role__icon">
+              <img src="assets/login/leaf.svg" alt="" width="20" height="20" />
+            </span>
+            @if (role() === 'agricultor') {
+              <span class="role__check">
+                <img src="assets/login/check.svg" alt="" width="12" height="12" />
+              </span>
+            }
+          </span>
+          <span class="role__name">{{ 'role.farmer' | translate }}</span>
+          <span class="role__text">{{ 'register.farmerText' | translate }}</span>
+        </button>
+
+        <button
+          class="role"
+          type="button"
+          [class.role--selected]="role() === 'comerciante'"
+          (click)="role.set('comerciante')"
+        >
+          <span class="role__top">
+            <span class="role__icon">
+              <img src="assets/login/building.svg" alt="" width="20" height="20" />
+            </span>
+            @if (role() === 'comerciante') {
+              <span class="role__check">
+                <img src="assets/login/check.svg" alt="" width="12" height="12" />
+              </span>
+            }
+          </span>
+          <span class="role__name">{{ 'role.merchantB2b' | translate }}</span>
+          <span class="role__text">{{ 'register.merchantText' | translate }}</span>
+        </button>
+      </div>
+    </section>
+
+    <div class="register__fields">
+      <label class="field">
+        <span class="field__label">{{ 'register.fullName' | translate }}</span>
+        <span class="field__control">
+          <input
+            type="text"
+            name="fullName"
+            autocomplete="name"
+            [value]="fullName()"
+            (input)="onFullNameInput($event)"
+          />
+        </span>
+      </label>
+
+      <label class="field">
+        <span class="field__label">{{ 'register.email' | translate }}</span>
+        <span class="field__control">
+          <input
+            type="email"
+            name="email"
+            autocomplete="email"
+            [value]="email()"
+            (input)="onEmailInput($event)"
+          />
+        </span>
+      </label>
+
+      <label class="field">
+        <span class="field__label">{{ 'register.password' | translate }}</span>
+        <span class="field__control">
+          <input
+            name="password"
+            autocomplete="new-password"
+            [type]="passwordVisible() ? 'text' : 'password'"
+            [value]="password()"
+            (input)="onPasswordInput($event)"
+          />
+          <button
+            class="field__toggle"
+            type="button"
+            aria-label="{{ 'register.showPassword' | translate }}"
+            (click)="togglePasswordVisibility()"
+          >
+            <img src="assets/login/eye.svg" alt="" width="18" height="18" />
+          </button>
+        </span>
+      </label>
+
+      <label class="field">
+        <span class="field__label">{{ 'register.confirm' | translate }}</span>
+        <span class="field__control">
+          <input
+            name="confirmPassword"
+            autocomplete="new-password"
+            placeholder="{{ 'register.confirmPlaceholder' | translate }}"
+            [type]="confirmPasswordVisible() ? 'text' : 'password'"
+            [value]="confirmPassword()"
+            (input)="onConfirmPasswordInput($event)"
+          />
+          <button
+            class="field__toggle"
+            type="button"
+            aria-label="{{ 'register.showConfirm' | translate }}"
+            (click)="toggleConfirmPasswordVisibility()"
+          >
+            <img src="assets/login/eye.svg" alt="" width="18" height="18" />
+          </button>
+        </span>
+      </label>
+    </div>
+
+    <div class="register__actions">
+      <button class="register__submit" type="submit">{{ 'register.submit' | translate }}</button>
+      <p class="register__switch">
+        <span>{{ 'register.hasAccount' | translate }}</span>
+        <button class="link" type="button" (click)="openLogin()">{{ 'register.login' | translate }}</button>
+      </p>
+    </div>
+  </form>
+</main>
