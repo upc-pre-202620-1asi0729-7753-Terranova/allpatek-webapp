@@ -1,0 +1,64 @@
+<section class="screen">
+  <header class="screen__intro">
+    <h1>{{ 'alerts.title' | translate }}</h1>
+    <p>{{ 'alerts.subtitle' | translate }}</p>
+  </header>
+
+  @if (loading()) {
+    <p class="screen__status">{{ 'alerts.loading' | translate }}</p>
+  } @else if (error()) {
+    <p class="screen__status">{{ 'alerts.loadError' | translate }}</p>
+  } @else if (!readings().length) {
+    <p class="screen__status">{{ 'alerts.empty' | translate }}</p>
+  } @else {
+    <div class="places" [class.places--single]="readings().length === 1">
+      @for (place of readings(); track place.parcelId) {
+        <button
+          type="button"
+          [class.active]="selected()?.parcelId === place.parcelId"
+          (click)="select(place.parcelId)"
+        >
+          <span class="place__copy">
+            <span>{{ place.parcelName }}</span>
+            <small>{{ place.latitude.toFixed(4) }}, {{ place.longitude.toFixed(4) }}</small>
+            <em>{{ place.conditionKey | translate }}</em>
+          </span>
+          <strong>{{ place.temperature.toFixed(1) }}°C</strong>
+        </button>
+      }
+    </div>
+
+    <div class="metrics">
+      @for (item of metrics(); track item.label) {
+        <article>
+          <header>
+            <p>{{ item.label | translate }}</p>
+            <span><img [src]="item.icon" alt="" width="20" height="20" /></span>
+          </header>
+          <strong>{{ item.value }}</strong>
+          <small>{{ item.detail | translate: item.params }}</small>
+        </article>
+      }
+    </div>
+
+    <section class="alerts">
+      <h2>
+        {{ 'alerts.active' | translate }}
+        <span [class.is-ok]="calm()">{{ alerts().length }}</span>
+      </h2>
+      @for (item of alerts(); track item.title + item.place) {
+        <article [class]="'alert alert--' + item.tone">
+          <span><img [src]="item.icon" alt="" width="20" height="20" /></span>
+          <div>
+            <h3>
+              {{ item.title | translate }}
+              <em>{{ item.level | translate }}</em>
+            </h3>
+            <p>{{ item.body | translate: item.params }}</p>
+            <small>{{ 'alerts.weatherSource' | translate: { place: item.place } }}</small>
+          </div>
+        </article>
+      }
+    </section>
+  }
+</section>
