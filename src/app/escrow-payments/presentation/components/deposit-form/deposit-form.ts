@@ -3,7 +3,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
-import { formatMoney, parseMoney } from '../../../domain/model/money';
+import { formatMoney, parseMoney } from '../../../../shared/domain/model/money';
 import { SessionStore } from '../../../../shared/application/session.store';
 import { WalletStore } from '../../../application/wallet.store';
 import { PaymentCard } from '../../../domain/model/payment-card.entity';

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, output, signal } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ProfileStore } from '../../../../shared/application/profile.store';
-import { moneyShares } from '../../../domain/model/money';
+import { moneyShares } from '../../../../shared/domain/model/money';
 import { Parcel } from '../../../domain/model/parcel.entity';
 
 /**
