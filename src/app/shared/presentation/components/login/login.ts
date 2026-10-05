@@ -4,7 +4,6 @@ import { Logo } from '../logo/logo';
 import { LanguageSwitcher } from '../language-switcher/language-switcher';
 import { ProfileStore } from '../../../application/profile.store';
 import { SessionStore } from '../../../application/session.store';
-import { UserApi } from '../../../infrastructure/user-api';
 import { TranslatePipe } from '@ngx-translate/core';
 
 /**
@@ -21,7 +20,6 @@ export class Login {
   readonly #router = inject(Router);
   readonly #session = inject(SessionStore);
   readonly #profiles = inject(ProfileStore);
-  readonly #users = inject(UserApi);
 
   protected readonly email = signal('');
   protected readonly password = signal('');
@@ -41,18 +39,9 @@ export class Login {
 
   protected onSubmit(event: Event): void {
     event.preventDefault();
-    this.#users.findByRole('agricultor').subscribe({
-      next: (user) => {
-        this.#session.enter(user?.role ?? 'agricultor', user?.fullName || 'agricultor', user?.profileId ?? 1);
-        this.#profiles.reload();
-        void this.#router.navigate(['/profile']);
-      },
-      error: () => {
-        this.#session.enter('agricultor', 'agricultor', 1);
-        this.#profiles.reload();
-        void this.#router.navigate(['/profile']);
-      },
-    });
+    this.#session.enter('agricultor', 'agricultor', 1);
+    this.#profiles.reload();
+    void this.#router.navigate(['/parcels']);
   }
 
   protected openRegister(): void {
