@@ -1,0 +1,11 @@
+.missing {
+  margin: 16px;
+  color: #ffffff;
+  font-family: Inter, sans-serif;
+}
+
+.missing a {
+  display: block;
+  margin-top: 8px;
+  color: #e9c46a;
+}

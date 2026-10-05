@@ -14,6 +14,8 @@ const alertRoutes = () =>
   import('./alerts-management/presentation/alert.routes').then((m) => m.alertRoutes);
 const escrowRoutes = () =>
   import('./escrow-payments/presentation/escrow.routes').then((m) => m.escrowRoutes);
+const parcelRoutes = () =>
+  import('./parcel-management/presentation/parcel.routes').then((m) => m.parcelRoutes);
 
 const baseTitle = 'Allpatek';
 
@@ -25,7 +27,8 @@ export const routes: Routes = [
     component: Shell,
     canActivate: [requireSession],
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'profile' },
+      { path: '', pathMatch: 'full', redirectTo: 'parcels' },
+      { path: 'parcels', loadChildren: parcelRoutes },
       { path: 'agreements', loadChildren: agreementRoutes },
       { path: 'alerts', loadChildren: alertRoutes },
       { path: 'escrow', loadChildren: escrowRoutes },

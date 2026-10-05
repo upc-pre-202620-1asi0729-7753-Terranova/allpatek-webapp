@@ -1,0 +1,56 @@
+<article
+  class="card"
+  [class.card--link]="viewer()"
+  [attr.role]="viewer() ? 'link' : null"
+  [attr.tabindex]="viewer() ? 0 : null"
+  (click)="openFromCard()"
+  (keydown.enter)="openFromCard()"
+>
+  <img class="card__photo" [src]="parcel().imageUrl" [alt]="parcel().name" />
+  <div class="card__body">
+    <div class="card__heading">
+      <h3>{{ parcel().name }}</h3>
+      @if (viewer() && publisher()) {
+        <p class="card__by">{{ 'parcels.publishedBy' | translate }} <strong>{{ publisher() }}</strong></p>
+      }
+      <span class="status" [class]="'status status--' + parcel().status">
+        {{ ('status.' + parcel().status) | translate }}
+      </span>
+    </div>
+    <dl class="facts">
+      <div>
+        <dt><img src="assets/workspace/parcel/area.svg" alt="" width="14" height="14" /> {{ 'parcels.area' | translate }}</dt>
+        <dd>{{ parcel().area }}</dd>
+      </div>
+      <div>
+        <dt><img src="assets/workspace/parcel/location.svg" alt="" width="14" height="14" /> {{ 'parcels.location' | translate }}</dt>
+        <dd>{{ parcel().location }}</dd>
+      </div>
+      <div>
+        <dt><img src="assets/workspace/parcel/soil.svg" alt="" width="14" height="14" /> {{ 'parcels.soil' | translate }}</dt>
+        <dd>
+          @if (soilKey(parcel().soilType); as key) {
+            {{ key | translate }}
+          } @else {
+            {{ parcel().soilType }}
+          }
+        </dd>
+      </div>
+      <div>
+        <dt><img src="assets/workspace/parcel/cost.svg" alt="" width="14" height="14" /> {{ 'parcels.cost' | translate }}</dt>
+        <dd class="facts__cost">{{ parcel().campaignCost }}</dd>
+      </div>
+    </dl>
+    @if (!viewer()) {
+    <img class="card__line" src="assets/workspace/card-divider.svg" alt="" width="412" height="1" />
+    <div class="card__actions">
+      @if (owned()) {
+        <button type="button" (click)="edit.emit()">{{ 'parcels.edit' | translate }}</button>
+        <button type="button" (click)="remove.emit()">{{ 'parcels.delete' | translate }}</button>
+      } @else if (owned() === false) {
+        <p class="card__locked">{{ 'parcels.notYours' | translate }}</p>
+      }
+    </div>
+    }
+  </div>
+</article>
