@@ -1,0 +1,50 @@
+<section class="screen">
+  <header class="screen__intro">
+    <h1>{{ 'evidence.title' | translate }}</h1>
+    <p>{{ 'evidence.subtitle' | translate }}</p>
+  </header>
+
+  <div class="stats">
+    <article>
+      <header>
+        <p>{{ 'evidence.total' | translate }}</p>
+        <span><img src="assets/workspace/evidence/folder.svg" alt="" width="20" height="20" /></span>
+      </header>
+      <strong>{{ total() }}</strong>
+    </article>
+    <article>
+      <header>
+        <p>{{ 'evidence.pending' | translate }}</p>
+        <span><img src="assets/workspace/evidence/pending.svg" alt="" width="20" height="20" /></span>
+      </header>
+      <strong>{{ pending() }}</strong>
+    </article>
+  </div>
+
+  <div class="table">
+    <div class="row row--head">
+      <span>{{ 'evidence.id' | translate }}</span>
+      <span>{{ 'evidence.date' | translate }}</span>
+      <span>{{ 'evidence.parcel' | translate }}</span>
+      <span>{{ 'evidence.type' | translate }}</span>
+      <span>{{ 'evidence.state' | translate }}</span>
+      <span>{{ 'evidence.action' | translate }}</span>
+    </div>
+    @for (item of records(); track item.id; let index = $index) {
+      <div class="row">
+        <span class="row__id">{{ index + 1 }}</span>
+        <span>{{ item.date }}</span>
+        <strong>{{ item.parcel }}</strong>
+        <span>{{ item.type | translate }}</span>
+        <em [class]="item.status === 'verified' ? 'badge badge--ok' : 'badge'">
+          {{ ('evidence.status.' + item.status) | translate }}
+        </em>
+        <button type="button" [attr.aria-label]="(actionPrefix() | translate) + item.parcel" (click)="openRecord(item)">
+          <img src="assets/workspace/evidence/eye.svg" alt="" width="18" height="18" />
+        </button>
+      </div>
+    } @empty {
+      <p class="empty">{{ 'evidence.empty' | translate }}</p>
+    }
+  </div>
+</section>

@@ -1,0 +1,36 @@
+<section class="screen">
+  <header class="screen__intro">
+    <h1>{{ 'contract.requestsTitle' | translate }}</h1>
+    <p>{{ 'contract.requestsSubtitle' | translate }}</p>
+  </header>
+
+  @if (requests().length) {
+    <ul class="requests">
+      @for (request of requests(); track request.agreement.parcelId) {
+        <li class="request">
+          <span class="request__avatar">{{ initials(request.merchantName) || '—' }}</span>
+          <span class="request__text">
+            <strong>{{ request.merchantName || ('contract.unnamed' | translate) }}</strong>
+            <small>{{ request.parcel.name }} · {{ request.parcel.campaignCost || '—' }}</small>
+            <em>{{ (request.agreement.farmerSigned ? 'contract.youSigned' : 'contract.pendingYou') | translate }}</em>
+          </span>
+          @if (request.agreement.farmerSigned) {
+            <span class="request__check" [attr.aria-label]="'contract.farmerSigned' | translate">
+              <img src="assets/workspace/contract/check.svg" alt="" width="12" height="12" />
+            </span>
+          }
+          <div class="request__actions">
+            <button type="button" class="request__details" (click)="openMerchant(request.agreement.id)">
+              {{ 'contract.merchantDetails' | translate }}
+            </button>
+            <button type="button" (click)="openRequest(request.agreement.parcelId, request.agreement.id)">
+              {{ (request.agreement.farmerSigned ? 'contract.viewRequest' : 'contract.signRequest') | translate }}
+            </button>
+          </div>
+        </li>
+      }
+    </ul>
+  } @else {
+    <p class="empty">{{ 'contract.requestsEmpty' | translate }}</p>
+  }
+</section>

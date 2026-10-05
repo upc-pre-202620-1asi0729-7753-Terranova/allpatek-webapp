@@ -1,0 +1,118 @@
+@if (showList()) {
+  <app-contract-list />
+} @else {
+<section class="screen">
+  <header class="screen__intro">
+    <h1>{{ 'contract.title' | translate }}</h1>
+    <p>{{ 'contract.subtitle' | translate }}</p>
+  </header>
+
+  <div class="split">
+    <article class="panel document">
+      <header class="document__head">
+        <p><strong>ALLPA</strong><span>TEK</span> • {{ 'contract.doc' | translate }}</p>
+      </header>
+      <div class="parties">
+        <h2>{{ 'contract.parties' | translate }}</h2>
+        <p>
+          <strong>{{ 'contract.farmer' | translate }}</strong>
+          {{ farmerName() || ('contract.unnamed' | translate) }}
+          @if (farmerDocument()) {
+            ({{ 'contract.document' | translate: { id: farmerDocument() } }})
+          }
+        </p>
+        <p>
+          <strong>{{ 'contract.tenant' | translate }}</strong>
+          {{ merchantName() || ('contract.unnamed' | translate) }}
+        </p>
+      </div>
+      <section>
+        <h3>{{ 'contract.clause1' | translate }}</h3>
+        <p>{{ 'contract.clause1Body' | translate: clause() }}</p>
+      </section>
+      <section>
+        <h3>{{ 'contract.clause2' | translate }}</h3>
+        <p>{{ 'contract.clause2Body' | translate: clause() }}</p>
+        <ul>
+          @for (item of milestones; track item.lead; let index = $index) {
+            <li>
+              <img src="assets/workspace/contract/bullet.svg" alt="" width="4" height="4" />
+              <span><strong>{{ item.lead | translate: { share: shares()[index] } }}</strong>{{ item.rest | translate }}</span>
+            </li>
+          }
+        </ul>
+      </section>
+      <section>
+        <h3>{{ 'contract.clause3' | translate }}</h3>
+        <p>{{ 'contract.clause3Body' | translate }}</p>
+      </section>
+    </article>
+
+    <form class="panel signature" (submit)="onSign($event)">
+      <h2>{{ 'contract.signState' | translate }}</h2>
+      <div class="party">
+        <span class="avatar">{{ farmerInitials() || '—' }}</span>
+        <span class="party__text">
+          <strong>{{ farmerName() || ('contract.unnamed' | translate) }}</strong>
+          <small>{{ 'role.farmer' | translate }}</small>
+        </span>
+        @if (farmerSigned()) {
+          <span class="party__check" [attr.aria-label]="'contract.farmerSigned' | translate">
+            <img src="assets/workspace/contract/check.svg" alt="" width="12" height="12" />
+          </span>
+        }
+      </div>
+      <div class="party">
+        <span class="avatar avatar--merchant">{{ merchantInitials() || '—' }}</span>
+        <span class="party__text">
+          <strong>{{ merchantName() || ('contract.unnamed' | translate) }}</strong>
+          <small>{{ 'role.custodian' | translate }}</small>
+        </span>
+        @if (merchantSigned()) {
+          <span class="party__check" [attr.aria-label]="'contract.merchantSigned' | translate">
+            <img src="assets/workspace/contract/check.svg" alt="" width="12" height="12" />
+          </span>
+        }
+      </div>
+      <h3>{{ 'contract.draw' | translate }}</h3>
+      <input #fileInput class="file" type="file" accept="image/png,image/jpeg" (change)="addSignature($event)" />
+      <button
+        class="canvas"
+        type="button"
+        [class.canvas--over]="dragging()"
+        (click)="pickSignature()"
+        (dragover)="onDrag($event)"
+        (dragleave)="onDragLeave()"
+        (drop)="onDrop($event)"
+      >
+        @if (signature(); as image) {
+          <img class="canvas__image" [src]="image" alt="" />
+          <span class="canvas__clear" (click)="clearSignature($event)">{{ 'contract.removeSignature' | translate }}</span>
+        } @else {
+          <img src="assets/workspace/contract/edit.svg" alt="" width="24" height="24" />
+          <p>{{ 'contract.drawHint' | translate }}</p>
+        }
+      </button>
+      @if (signatureError()) {
+        <p class="form__status">{{ 'contract.signatureError' | translate }}</p>
+      }
+      <div class="consent">
+        <span class="box">
+          <img src="assets/workspace/contract/check.svg" alt="" width="12" height="12" />
+        </span>
+        <span>
+          <strong>{{ 'contract.accept' | translate }}</strong>
+          <small>{{ 'contract.acceptHint' | translate }}</small>
+        </span>
+      </div>
+      <button class="primary" type="submit" [disabled]="finished()">
+        {{ (isMerchant() ? 'contract.send' : 'contract.sign') | translate }}
+      </button>
+      @if (sent()) {
+        <p class="sent">{{ 'contract.sent' | translate }}</p>
+      }
+      <p class="note">{{ 'contract.note' | translate }}</p>
+    </form>
+  </div>
+</section>
+}

@@ -1,0 +1,56 @@
+<section class="review">
+  <header>
+    <div>
+      <h1>{{ 'evidence.reviewTitle' | translate }}</h1>
+      <p>{{ 'evidence.reviewSubtitle' | translate }}</p>
+    </div>
+    <a class="vault" routerLink="/escrow" [queryParams]="{ parcelId: parcelId() }">{{ 'evidence.openVault' | translate }}</a>
+  </header>
+
+  <div class="summary">
+    <article>
+      <p>{{ 'evidence.farmer' | translate }}</p>
+      <strong>{{ farmerName() || ('contract.unnamed' | translate) }} <em>{{ 'role.farmer' | translate }}</em></strong>
+    </article>
+    <article>
+      <p>{{ 'evidence.linked' | translate }}</p>
+      <strong>{{ parcel() }}</strong>
+      <small>{{ kind() | translate }}</small>
+    </article>
+    <article>
+      <p>{{ 'evidence.code' | translate }}</p>
+      <strong>{{ contractId() || '—' }}</strong>
+    </article>
+    <article>
+      <p>{{ 'evidence.stateLabel' | translate }}</p>
+      <strong>{{ (focus()?.status === 'verified' ? 'evidence.paymentPending' : focus()?.status === 'review' ? 'evidence.waitingMerchant' : 'evidence.inProgress') | translate }}</strong>
+    </article>
+  </div>
+
+  @if (focus(); as item) {
+    <div class="proof">
+      <figure>
+        @if (item.image.startsWith('data:image')) {
+          <img [src]="item.image" [alt]="item.fileName" />
+        }
+        <figcaption>{{ item.fileName || ('evidence.noFile' | translate) }}</figcaption>
+      </figure>
+      <aside class="decision">
+        <div>
+          <p>{{ 'evidence.milestoneLabel' | translate }}</p>
+          <h2>{{ focusTitle() | translate }}</h2>
+          <small>25% · {{ focusAmount() }}</small>
+        </div>
+        <div>
+          <h2>{{ 'evidence.observation' | translate }}</h2>
+          <p>{{ item.notes || ('evidence.noNotes' | translate) }}</p>
+        </div>
+        @if (item.status === 'review') {
+          <button type="button" (click)="confirm()">{{ 'evidence.acceptEvidence' | translate }}</button>
+        } @else {
+          <p class="decision__ok">{{ 'evidence.acceptedEvidence' | translate }}</p>
+        }
+      </aside>
+    </div>
+  }
+</section>

@@ -1,0 +1,167 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.card--link {
+  cursor: pointer;
+}
+
+.card--link:hover,
+.card--link:focus-visible {
+  border-color: #52b788;
+  outline: none;
+}
+
+.card__photo {
+  display: block;
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px;
+}
+
+.card__heading {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.card__by {
+  margin: 0;
+  color: #9ca3af;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.card__by strong {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.card__heading h3 {
+  margin: 0;
+  overflow: hidden;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.4;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.status {
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.status--available {
+  border: 1px solid #52b788;
+  background: rgba(82, 183, 136, 0.15);
+  color: #52b788;
+}
+
+.status--in-production {
+  border: 1px solid #e9c46a;
+  background: rgba(233, 196, 106, 0.15);
+  color: #e9c46a;
+}
+
+.status--maintenance {
+  border: 1px solid #9ca3af;
+  background: rgba(255, 255, 255, 0.1);
+  color: #9ca3af;
+}
+
+.facts {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+}
+
+.facts div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.facts dt,
+.facts dd {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.facts dt {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+.facts dt img {
+  display: block;
+  flex-shrink: 0;
+}
+
+.facts dd {
+  color: #ffffff;
+  font-weight: 600;
+  text-align: right;
+}
+
+.facts dd.facts__cost {
+  color: #e9c46a;
+  font-weight: 700;
+}
+
+.card__line {
+  display: block;
+  width: 100%;
+  height: 1px;
+}
+
+.card__actions {
+  display: flex;
+  gap: 8px;
+}
+
+.card__actions button {
+  flex: 1;
+  padding: 8px 4px;
+  border: 1px solid #2d6a4f;
+  border-radius: 6px;
+  background: transparent;
+  color: #52b788;
+  font: 700 11px/normal Inter, sans-serif;
+  cursor: pointer;
+}
+
+.card__locked {
+  flex: 1;
+  margin: 0;
+  padding: 8px 4px;
+  color: #9ca3af;
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+}

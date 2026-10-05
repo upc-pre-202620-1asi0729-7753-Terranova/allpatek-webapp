@@ -1,0 +1,32 @@
+<section class="board">
+  <header class="board__intro">
+    <div>
+      <h1>{{ 'parcels.title' | translate }}</h1>
+      <p>{{ 'parcels.subtitle' | translate }}</p>
+    </div>
+    @if (audience() === 'farmer') {
+      <button type="button" (click)="publishParcel()">{{ 'parcels.publish' | translate }}</button>
+    }
+  </header>
+
+  @if (loading()) {
+    <p class="board__status">{{ 'parcels.loading' | translate }}</p>
+  } @else if (error()) {
+    <p class="board__status">{{ 'parcels.loadError' | translate }}</p>
+  } @else if (actionError() === 'delete') {
+    <p class="board__status">{{ 'parcels.deleteError' | translate }}</p>
+  }
+
+  <div class="board__grid">
+    @for (parcel of parcels(); track parcel.id) {
+      <app-parcel-card
+        [parcel]="parcel"
+        [viewer]="audience() === 'merchant'"
+        [owned]="ownerId() === null ? null : parcel.ownerId === ownerId()"
+        (open)="openParcel(parcel)"
+        (edit)="editParcel(parcel)"
+        (remove)="deleteParcel(parcel)"
+      />
+    }
+  </div>
+</section>

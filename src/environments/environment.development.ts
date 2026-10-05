@@ -1,0 +1,16 @@
+export const environment = {
+  production: false,
+  platformProviderApiBaseUrl: 'http://localhost:3000/api/v1',
+  platformProviderParcelsEndpointPath: '/parcels',
+  platformProviderAgreementsEndpointPath: '/agreements',
+  platformProviderEscrowEndpointPath: '/escrow',
+  platformProviderEvidenceEndpointPath: '/evidence',
+  platformProviderAlertsEndpointPath: '/alerts',
+  platformProviderProfilesEndpointPath: '/profiles',
+  platformProviderUsersEndpointPath: '/users',
+  platformProviderWalletsEndpointPath: '/wallets',
+  weatherApiBaseUrl: 'https://api.open-meteo.com/v1/forecast',
+  n8nContractWebhookUrl: 'https://foyer-phonics-pyromania.ngrok-free.dev/webhook/generar-reporte',
+  n8nEvidenceWebhookUrl: 'https://foyer-phonics-pyromania.ngrok-free.dev/webhook/mensaje-aviso',
+  n8nPayoutWebhookUrl: 'https://foyer-phonics-pyromania.ngrok-free.dev/webhook/mensaje-pago',
+};

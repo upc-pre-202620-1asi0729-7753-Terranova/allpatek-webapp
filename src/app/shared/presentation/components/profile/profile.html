@@ -1,0 +1,97 @@
+<form class="profile" [formGroup]="form" (submit)="onSubmit($event)">
+  <header class="profile__intro">
+    <h1>{{ 'profile.title' | translate }}</h1>
+    <p>{{ 'profile.subtitle' | translate }}</p>
+    @if (loading()) {
+      <p class="profile__status">{{ 'profile.loading' | translate }}</p>
+    } @else if (error() === 'load') {
+      <p class="profile__status">{{ 'profile.loadError' | translate }}</p>
+    } @else if (error() === 'save') {
+      <p class="profile__status">{{ 'profile.saveError' | translate }}</p>
+    } @else if (saved()) {
+      <p class="profile__status profile__status--ok">{{ 'profile.saved' | translate }}</p>
+    }
+  </header>
+
+  <section class="hero">
+    <div class="hero__identity">
+      <div class="hero__photo">
+        <img src="assets/workspace/profile/avatar.png" [alt]="form.controls.fullName.value" width="72" height="72" />
+        <button type="button">
+          <img src="assets/workspace/profile/camera.svg" alt="" width="10" height="10" />
+          {{ 'profile.changePhoto' | translate }}
+        </button>
+      </div>
+      <div>
+        <h2>{{ form.controls.fullName.value }}</h2>
+        <span class="badge">{{ roleKey() | translate }}</span>
+        <p>{{ 'profile.memberSince' | translate }}</p>
+      </div>
+    </div>
+    <button class="edit" type="button" (click)="startEditing()">
+      <img src="assets/workspace/profile/edit.svg" alt="" width="13" height="13" />
+      {{ 'profile.edit' | translate }}
+    </button>
+  </section>
+
+  <section class="card">
+    <h2>
+      <img src="assets/workspace/profile/user.svg" alt="" width="16" height="16" />
+      {{ 'profile.personal' | translate }}
+    </h2>
+    <div class="grid">
+      <label>
+        {{ 'profile.fullName' | translate }}
+        <input type="text" formControlName="fullName" [readOnly]="!editing()" />
+      </label>
+      <label>
+        {{ 'profile.phone' | translate }}
+        <input type="text" formControlName="phone" [readOnly]="!editing()" />
+      </label>
+      <label>
+        {{ 'profile.document' | translate }}
+        <input type="text" formControlName="document" [readOnly]="!editing()" />
+      </label>
+      <label>
+        {{ 'profile.address' | translate }}
+        <input type="text" formControlName="address" [readOnly]="!editing()" />
+      </label>
+      <label>
+        {{ 'profile.email' | translate }}
+        <input type="email" formControlName="email" [readOnly]="!editing()" />
+      </label>
+      <label>
+        {{ 'profile.accountType' | translate }}
+        <span class="field">
+          <span class="badge badge--small">{{ roleKey() | translate }}</span>
+        </span>
+      </label>
+    </div>
+  </section>
+
+  @if (merchant()) {
+    <section class="card">
+      <h2>{{ 'profile.commercial' | translate }}</h2>
+      <p class="card__note">{{ 'profile.commercialNote' | translate }}</p>
+      <div class="grid">
+        <label>
+          {{ 'profile.company' | translate }}
+          <input type="text" formControlName="company" [readOnly]="!editing()" />
+        </label>
+        <label>
+          {{ 'profile.ruc' | translate }}
+          <input type="text" formControlName="ruc" [readOnly]="!editing()" />
+        </label>
+        <label>
+          {{ 'profile.activity' | translate }}
+          <input type="text" formControlName="activity" [readOnly]="!editing()" />
+        </label>
+      </div>
+    </section>
+  }
+
+  <div class="profile__actions">
+    <button class="save" type="submit">{{ 'profile.save' | translate }}</button>
+    <button class="cancel" type="button" (click)="closeProfile()">{{ 'profile.cancel' | translate }}</button>
+  </div>
+</form>
