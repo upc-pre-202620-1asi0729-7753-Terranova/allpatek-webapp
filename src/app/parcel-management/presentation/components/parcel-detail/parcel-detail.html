@@ -1,0 +1,109 @@
+<section class="detail">
+  <div class="detail__main">
+    <div class="gallery">
+      <img
+        class="gallery__hero"
+        [class.gallery__hero--solo]="photos().length < 2"
+        [src]="hero()"
+        [alt]="parcel().name"
+      />
+      @if (photos().length > 1) {
+        <div class="gallery__thumbs">
+          @for (photo of photos(); track photo) {
+            <button type="button" [class.is-active]="photo === hero()" (click)="choose(photo)">
+              <img [src]="photo" [alt]="parcel().name" />
+            </button>
+          }
+        </div>
+      }
+    </div>
+
+    <header class="heading">
+      <div>
+        <h1>{{ parcel().name }}</h1>
+        @if (publisher()) {
+          <p>{{ 'detail.publishedBy' | translate }} <strong>{{ publisher() }}</strong></p>
+        }
+      </div>
+    </header>
+
+    <section class="sheet">
+      <h2>{{ 'detail.sheet' | translate }}</h2>
+      <div class="facts">
+        <article>
+          <p>{{ 'detail.totalArea' | translate }}</p>
+          <strong>{{ parcel().area }}</strong>
+        </article>
+        <article>
+          <p>{{ 'detail.soil' | translate }}</p>
+          <strong>
+            @if (soilKey(); as key) {
+              {{ key | translate }}
+            } @else {
+              {{ parcel().soilType }}
+            }
+          </strong>
+        </article>
+        <article>
+          <p>{{ 'detail.gps' | translate }}</p>
+          <strong>{{ parcel().id === 'el-vergel' ? '-13.0824, -76.3125' : parcel().location }}</strong>
+        </article>
+        <article>
+          <p>{{ 'detail.crops' | translate }}</p>
+          @if (parcel().crops.length) {
+            <div class="tags">
+              @for (crop of parcel().crops; track crop) {
+                <span>{{ crop }}</span>
+              }
+            </div>
+          } @else {
+            <small>{{ 'detail.noCrops' | translate }}</small>
+          }
+        </article>
+      </div>
+    </section>
+
+  </div>
+
+  <aside class="summary">
+    <h2>{{ 'detail.summary' | translate }}</h2>
+    <p>{{ 'detail.configure' | translate }} {{ parcel().name }}</p>
+    <p class="price">
+      <strong>{{ parcel().campaignCost }}</strong>
+      <small>{{ 'detail.priceLabel' | translate }}</small>
+    </p>
+    <dl>
+      <div>
+        <dt>{{ 'detail.duration' | translate }}</dt>
+        <dd>
+          @if (parcel().durationMonths) {
+            {{ 'detail.monthCount' | translate: { count: parcel().durationMonths } }}
+          } @else {
+            {{ 'detail.notSet' | translate }}
+          }
+        </dd>
+      </div>
+      <div>
+        <dt>{{ 'detail.start' | translate }}</dt>
+        <dd>
+          @if (startMonthKey()) {
+            {{ startMonthKey() | translate }} {{ startYear() }}
+          } @else {
+            {{ 'detail.notSet' | translate }}
+          }
+        </dd>
+      </div>
+    </dl>
+    <h3>{{ 'detail.plan' | translate }}</h3>
+    <ol>
+      @for (item of milestones; track item; let index = $index) {
+        <li>
+          <span>{{ item | translate }}</span>
+          <b>25% · {{ shares()[index] }}</b>
+        </li>
+      }
+    </ol>
+    <p class="note">{{ 'detail.note' | translate }}</p>
+    <button type="button" (click)="request.emit()">{{ 'detail.request' | translate }}</button>
+  </aside>
+</section>
