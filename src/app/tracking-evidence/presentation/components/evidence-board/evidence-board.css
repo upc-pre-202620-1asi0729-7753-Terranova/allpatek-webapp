@@ -1,0 +1,165 @@
+.screen {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px 12px 8px;
+}
+
+.screen__intro h1,
+.stats strong,
+.row strong {
+  margin: 0;
+  color: #ffffff;
+}
+
+.screen__intro h1 {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.screen__intro p,
+.stats p,
+.row span,
+.empty {
+  margin: 0;
+  color: #9ca3af;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.screen__intro p,
+.empty {
+  margin-top: 10px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.stats article,
+.table {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.stats article {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 18px;
+}
+
+.stats header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.stats header span,
+.row button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stats header span {
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.stats img,
+.row img {
+  display: block;
+}
+
+.stats strong {
+  font-size: 18px;
+}
+
+.table {
+  overflow-x: auto;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 48px 110px minmax(140px, 1fr) minmax(150px, 1.2fr) 110px 72px;
+  align-items: center;
+  gap: 12px;
+  min-width: 720px;
+  padding: 8px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.row:last-child {
+  border-bottom: 0;
+}
+
+.row--head {
+  background: rgba(255, 255, 255, 0.02);
+  color: #9ca3af;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.row--head span {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.row strong {
+  font-size: 14px;
+}
+
+.row__id {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.row span {
+  margin: 0;
+}
+
+.badge {
+  justify-self: start;
+  padding: 3px 10px;
+  border: 1px solid #e9c46a;
+  border-radius: 6px;
+  background: rgba(233, 196, 106, 0.15);
+  color: #e9c46a;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+}
+
+.badge--ok {
+  border-color: #52b788;
+  background: rgba(82, 183, 136, 0.15);
+  color: #52b788;
+}
+
+.row button {
+  justify-self: end;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+}
+
+@media screen and (max-width: 860px) {
+  .stats {
+    display: flex;
+    flex-direction: column;
+  }
+}
