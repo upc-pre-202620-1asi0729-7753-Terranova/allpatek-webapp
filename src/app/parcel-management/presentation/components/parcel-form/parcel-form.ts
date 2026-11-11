@@ -92,7 +92,7 @@ export class ParcelForm {
     cost: ['', Validators.required],
     duration: ['', [Validators.required, Validators.min(7)]],
     startMonth: ['', Validators.required],
-    startYear: ['', [Validators.required, Validators.min(2026)]],
+    startYear: ['', [Validators.required, Validators.min(new Date().getFullYear())]],
     latitude: ['', Validators.required],
     longitude: ['', Validators.required],
   }, { validators: futureStart });

@@ -44,9 +44,6 @@ export class ParcelDetail {
   }
 
   protected soilKey(): string {
-    if (this.parcel().id === 'el-vergel') {
-      return 'soil.clayLoam';
-    }
     switch (this.parcel().soilType) {
       case 'Franco':
         return 'soil.loam';
@@ -56,6 +53,8 @@ export class ParcelDetail {
         return 'soil.sandy';
       case 'Franco Arenoso':
         return 'soil.sandyLoam';
+      case 'Franco Arcilloso':
+        return 'soil.clayLoam';
       default:
         return '';
     }

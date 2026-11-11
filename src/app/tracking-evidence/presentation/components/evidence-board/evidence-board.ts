@@ -44,7 +44,7 @@ export class EvidenceBoard {
     const merchantId = this.#session.profileId();
     return this.#evidence
       .agreements()
-      .filter((agreement) => agreement.merchantSigned)
+      .filter((agreement) => agreement.merchantSigned && agreement.farmerSigned)
       .flatMap((agreement) => {
         const parcel = this.#evidence.parcels().find((item) => item.id === agreement.parcelId);
         if (!parcel) {
