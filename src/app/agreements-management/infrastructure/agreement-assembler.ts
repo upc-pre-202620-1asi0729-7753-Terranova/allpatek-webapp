@@ -3,19 +3,26 @@ import { AgreementResource, AgreementsResponse } from './agreements-response';
 
 export class AgreementAssembler {
   toEntitiesFromResponse(response: AgreementsResponse): Agreement[] {
-    return response.agreements.map((resource) => this.toEntityFromResource(resource));
+    return response.agreements.flatMap((resource) => this.toEntityFromResource(resource) ?? []);
   }
 
-  toEntityFromResource(resource: AgreementResource): Agreement {
-    return new Agreement({
-      id: String(resource.id),
-      parcelId: resource.parcelId || String(resource.id),
-      merchantName: resource.merchantName,
-      merchantProfileId: resource.merchantProfileId,
-      merchantSigned: resource.merchantSigned,
-      farmerSigned: resource.farmerSigned,
-      createdAt: resource.createdAt,
-    });
+  toEntityFromResource(resource: AgreementResource): Agreement | null {
+    if (!resource?.id || !resource.parcelId) {
+      return null;
+    }
+    try {
+      return new Agreement({
+        id: String(resource.id),
+        parcelId: resource.parcelId,
+        merchantName: resource.merchantName,
+        merchantProfileId: resource.merchantProfileId,
+        merchantSigned: resource.merchantSigned,
+        farmerSigned: resource.farmerSigned,
+        createdAt: resource.createdAt,
+      });
+    } catch {
+      return null;
+    }
   }
 
   toResourceFromEntity(entity: Agreement): AgreementResource {

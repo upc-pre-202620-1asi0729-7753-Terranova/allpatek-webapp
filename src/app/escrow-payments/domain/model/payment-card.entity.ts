@@ -26,8 +26,8 @@ export class PaymentCard {
     if (!/^\d{4}$/.test(card.last4) || !card.holder.trim() || !/^\d{2}\/\d{2}$/.test(card.expiry)) {
       throw new Error('Card details are incomplete.');
     }
-    if (!Number.isInteger(card.openingCents) || card.openingCents < 1) {
-      throw new Error('Card balance must be greater than zero.');
+    if (!Number.isInteger(card.openingCents) || card.openingCents < 0) {
+      throw new Error('Card balance must be a non-negative amount.');
     }
     this.id = card.id;
     this.profileId = card.profileId;

@@ -7,18 +7,23 @@ export class WalletAssembler {
   }
 
   toEntityFromResource(resource: WalletResource): PaymentCard | null {
-    if (!resource?.id || !resource.profileId || !resource.last4) {
+    const last4 = resource.last4 || '';
+    if (!resource?.id || !resource.profileId || !last4) {
       return null;
     }
-    return new PaymentCard({
-      id: String(resource.id),
-      profileId: resource.profileId,
-      holder: resource.holder,
-      last4: resource.last4,
-      expiry: resource.expiry,
-      brand: resource.brand,
-      openingCents: resource.openingCents,
-    });
+    try {
+      return new PaymentCard({
+        id: String(resource.id),
+        profileId: resource.profileId,
+        holder: resource.holder,
+        last4,
+        expiry: resource.expiry,
+        brand: resource.brand,
+        openingCents: Number.isInteger(resource.openingCents) ? resource.openingCents : 0,
+      });
+    } catch {
+      return null;
+    }
   }
 
   toResourceFromEntity(entity: PaymentCard): WalletResource {

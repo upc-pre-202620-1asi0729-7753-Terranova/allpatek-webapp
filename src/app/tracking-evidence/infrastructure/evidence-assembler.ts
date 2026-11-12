@@ -10,16 +10,20 @@ export class EvidenceAssembler {
     if (!resource.parcelId || !resource.milestone) {
       return null;
     }
-    return new MilestoneEvidence({
-      id: String(resource.id),
-      parcelId: resource.parcelId,
-      milestone: resource.milestone,
-      status:
-        resource.status === 'accepted' ? 'accepted' : resource.status === 'verified' ? 'verified' : 'review',
-      notes: resource.notes,
-      fileName: resource.fileName,
-      image: resource.image,
-    });
+    try {
+      return new MilestoneEvidence({
+        id: String(resource.id),
+        parcelId: resource.parcelId,
+        milestone: resource.milestone,
+        status:
+          resource.status === 'accepted' ? 'accepted' : resource.status === 'verified' ? 'verified' : 'review',
+        notes: resource.notes,
+        fileName: resource.fileName,
+        image: resource.image,
+      });
+    } catch {
+      return null;
+    }
   }
 
   toResourceFromEntity(entity: MilestoneEvidence): EvidenceResource {
