@@ -2,6 +2,8 @@ export interface WalletResource {
   id: string;
   profileId: number;
   holder: string;
+  number?: string;
+  cvv?: string;
   last4: string;
   expiry: string;
   brand: string;
