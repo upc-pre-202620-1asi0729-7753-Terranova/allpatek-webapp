@@ -31,7 +31,7 @@ export class ProfileStore {
     this.reload();
   }
 
-  /** Reads the profiles again from the platform API (Azure or local). */
+  /** Reads the profiles again from the platform API. */
   reload(): void {
     this.#loadProfile();
   }

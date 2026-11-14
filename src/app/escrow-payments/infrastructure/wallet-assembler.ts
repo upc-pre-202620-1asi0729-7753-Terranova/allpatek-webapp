@@ -7,8 +7,9 @@ export class WalletAssembler {
   }
 
   toEntityFromResource(resource: WalletResource): PaymentCard | null {
-    const last4 = resource.last4 || '';
-    if (!resource?.id || !resource.profileId || !last4) {
+    const digits = (resource.number ?? '').replace(/\D/g, '');
+    const last4 = resource.last4 || digits.slice(-4);
+    if (!resource?.id || !resource.profileId || !/^\d{4}$/.test(last4)) {
       return null;
     }
     try {
@@ -17,6 +18,8 @@ export class WalletAssembler {
         profileId: resource.profileId,
         holder: resource.holder,
         last4,
+        number: digits.length === 16 ? digits : '',
+        cvv: resource.cvv,
         expiry: resource.expiry,
         brand: resource.brand,
         openingCents: Number.isInteger(resource.openingCents) ? resource.openingCents : 0,
@@ -31,6 +34,8 @@ export class WalletAssembler {
       id: entity.id,
       profileId: entity.profileId,
       holder: entity.holder,
+      number: entity.number,
+      cvv: entity.cvv,
       last4: entity.last4,
       expiry: entity.expiry,
       brand: entity.brand,
