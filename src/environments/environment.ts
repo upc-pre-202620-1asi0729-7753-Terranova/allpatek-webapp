@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  platformProviderApiBaseUrl: 'https://allpatek-mockapi-byctbpd8czefe5e6.chilecentral-01.azurewebsites.net/api/v1',
+  platformProviderApiBaseUrl: 'https://allpatek-platform.onrender.com/api/v1',
   platformProviderParcelsEndpointPath: '/parcels',
   platformProviderAgreementsEndpointPath: '/agreements',
   platformProviderEscrowEndpointPath: '/escrow',

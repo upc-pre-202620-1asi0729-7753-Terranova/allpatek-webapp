@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { EvidenceReview } from '../../components/evidence-review/evidence-review';
 
@@ -12,6 +12,7 @@ import { EvidenceReview } from '../../components/evidence-review/evidence-review
 })
 export class EvidenceReviewView {
   readonly #route = inject(ActivatedRoute);
+  readonly #router = inject(Router);
 
   protected readonly parcel = toSignal(
     this.#route.queryParamMap.pipe(map((params) => params.get('parcel') ?? '')),
@@ -27,4 +28,12 @@ export class EvidenceReviewView {
     this.#route.queryParamMap.pipe(map((params) => params.get('parcelId') ?? '')),
     { initialValue: this.#route.snapshot.queryParamMap.get('parcelId') ?? '' },
   );
+
+  constructor() {
+    effect(() => {
+      if (!this.parcelId() || !this.parcel()) {
+        void this.#router.navigate(['/evidence']);
+      }
+    });
+  }
 }

@@ -1,6 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
-import { catchError, distinctUntilChanged, EMPTY, map, switchMap, tap } from 'rxjs';
+import { catchError, combineLatest, distinctUntilChanged, EMPTY, map, switchMap, tap } from 'rxjs';
 import { SessionStore } from '../../shared/application/session.store';
 import { ParcelRef } from '../domain/model/parcel-ref';
 import { WeatherReading } from '../domain/model/weather-reading';
@@ -34,9 +34,9 @@ export class ClimateStore {
         error: () => this.#parcelsSignal.set([]),
       });
 
-    toObservable(this.#parcelsSignal)
+    combineLatest([toObservable(this.#parcelsSignal), toObservable(this.#session.profileId)])
       .pipe(
-        map((parcels) => this.#places(parcels)),
+        map(([parcels]) => this.#places(parcels)),
         distinctUntilChanged(
           (left, right) =>
             left.map((place) => `${place.parcelId}:${place.latitude},${place.longitude}`).join('|') ===

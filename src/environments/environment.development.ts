@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  platformProviderApiBaseUrl: 'http://localhost:3000/api/v1',
+  platformProviderApiBaseUrl: 'https://allpatek-platform.onrender.com/api/v1',
   platformProviderParcelsEndpointPath: '/parcels',
   platformProviderAgreementsEndpointPath: '/agreements',
   platformProviderEscrowEndpointPath: '/escrow',

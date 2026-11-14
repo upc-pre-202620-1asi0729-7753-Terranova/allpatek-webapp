@@ -19,7 +19,7 @@ export class ParcelsApiEndpoint extends ErrorHandlingEnabledBaseType {
     return this.http.get<ParcelsResponse | ParcelResource[]>(this.#endpointUrl).pipe(
       map((response) => {
         if (Array.isArray(response)) {
-          return response.map((resource) => this.#assembler.toEntityFromResource(resource));
+          return response.flatMap((resource) => this.#assembler.toEntityFromResource(resource) ?? []);
         }
         return this.#assembler.toEntitiesFromResponse(response);
       }),
@@ -30,7 +30,7 @@ export class ParcelsApiEndpoint extends ErrorHandlingEnabledBaseType {
   create(entity: Parcel): Observable<Parcel> {
     const resource = this.#assembler.toResourceFromEntity(entity);
     return this.http.post<ParcelResource>(this.#endpointUrl, resource).pipe(
-      map((created) => this.#assembler.toEntityFromResource(created)),
+      map((created) => this.#assembler.toEntityFromResource(created) ?? entity),
       catchError(this.handleError('Failed to create parcel')),
     );
   }
@@ -38,7 +38,7 @@ export class ParcelsApiEndpoint extends ErrorHandlingEnabledBaseType {
   update(entity: Parcel): Observable<Parcel> {
     const resource = this.#assembler.toResourceFromEntity(entity);
     return this.http.put<ParcelResource>(`${this.#endpointUrl}/${entity.id}`, resource).pipe(
-      map((updated) => this.#assembler.toEntityFromResource(updated)),
+      map((updated) => this.#assembler.toEntityFromResource(updated) ?? entity),
       catchError(this.handleError('Failed to update parcel')),
     );
   }

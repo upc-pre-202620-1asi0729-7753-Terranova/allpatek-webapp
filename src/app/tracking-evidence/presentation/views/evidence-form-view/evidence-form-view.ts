@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
@@ -29,6 +29,14 @@ export class EvidenceFormView {
     this.#route.queryParamMap.pipe(map((params) => params.get('parcelId') ?? '')),
     { initialValue: this.#route.snapshot.queryParamMap.get('parcelId') ?? '' },
   );
+
+  constructor() {
+    effect(() => {
+      if (!this.parcelId() || !this.parcel()) {
+        void this.#router.navigate(['/evidence']);
+      }
+    });
+  }
 
   protected close(): void {
     void this.#router.navigate(['/evidence']);

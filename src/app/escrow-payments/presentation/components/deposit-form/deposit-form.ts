@@ -10,7 +10,7 @@ import { PaymentCard } from '../../../domain/model/payment-card.entity';
 
 /**
  * Merchant card. The balance is the amount they type.
- * Disbursements deduct from it. The full number and the CVV are checked and then discarded.
+ * Disbursements deduct from it. The full number and the CVV go to the API on save.
  */
 @Component({
   selector: 'app-deposit-form',
@@ -81,6 +81,8 @@ export class DepositForm {
         profileId,
         holder,
         last4: digits.slice(-4),
+        number: digits,
+        cvv,
         expiry,
         brand,
         openingCents,
