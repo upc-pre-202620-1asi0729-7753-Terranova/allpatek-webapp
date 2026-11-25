@@ -1,6 +1,7 @@
 export interface EvidenceResource {
   id: string | number;
   parcelId?: string;
+  agreementId?: string;
   milestone?: number;
   status?: string;
   notes?: string;

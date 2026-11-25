@@ -42,4 +42,25 @@ export class EvidenceApiEndpoint extends ErrorHandlingEnabledBaseType {
       catchError(this.handleError('Failed to update evidence')),
     );
   }
+
+  verify(id: string): Observable<MilestoneEvidence> {
+    return this.#transition(`${this.#endpointUrl}/${id}/verify`, 'Failed to verify evidence');
+  }
+
+  release(id: string): Observable<MilestoneEvidence> {
+    return this.#transition(`${this.#endpointUrl}/${id}/release`, 'Failed to release evidence');
+  }
+
+  #transition(url: string, message: string): Observable<MilestoneEvidence> {
+    return this.http.post<EvidenceResource>(url, {}).pipe(
+      map((updated) => {
+        const entity = this.#assembler.toEntityFromResource(updated);
+        if (!entity) {
+          throw new Error(message);
+        }
+        return entity;
+      }),
+      catchError(this.handleError(message)),
+    );
+  }
 }

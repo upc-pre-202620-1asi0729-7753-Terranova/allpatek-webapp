@@ -60,10 +60,14 @@ export class EvidenceStore {
     image: string,
     onDone: (saved: boolean) => void,
   ): void {
+    const agreement = this.agreements().find(
+      (item) => item.parcelId === parcelId && item.merchantSigned && item.farmerSigned,
+    );
     const id = `${parcelId}-${milestone}`;
     const next = new MilestoneEvidence({
       id,
       parcelId,
+      agreementId: agreement?.id ?? '',
       milestone,
       status: 'review',
       notes,
@@ -83,18 +87,18 @@ export class EvidenceStore {
   }
 
   confirm(parcelId: string, milestone: number, onDone: (saved: boolean) => void): void {
-    this.#move(parcelId, milestone, 'review', 'verified', onDone);
+    this.#move(parcelId, milestone, 'review', (id) => this.#evidenceApi.verifyEvidence(id), onDone);
   }
 
   release(parcelId: string, milestone: number, onDone: (saved: boolean) => void): void {
-    this.#move(parcelId, milestone, 'verified', 'accepted', onDone);
+    this.#move(parcelId, milestone, 'verified', (id) => this.#evidenceApi.releaseEvidence(id), onDone);
   }
 
   #move(
     parcelId: string,
     milestone: number,
     from: MilestoneEvidence['status'],
-    to: MilestoneEvidence['status'],
+    request: (id: string) => ReturnType<EvidenceApi['verifyEvidence']>,
     onDone: (saved: boolean) => void,
   ): void {
     const current = this.forParcel(parcelId).find((item) => item.milestone === milestone && item.status === from);
@@ -102,9 +106,7 @@ export class EvidenceStore {
       onDone(false);
       return;
     }
-    const next = new MilestoneEvidence({ ...current, status: to });
-    this.#evidenceApi
-      .updateEvidence(next)
+    request(current.id)
       .pipe(retry(2))
       .subscribe({
         next: (saved) => {

@@ -2,6 +2,7 @@
 export class MilestoneEvidence {
   readonly id: string;
   readonly parcelId: string;
+  readonly agreementId: string;
   readonly milestone: number;
   readonly status: 'review' | 'verified' | 'accepted';
   readonly notes: string;
@@ -11,6 +12,7 @@ export class MilestoneEvidence {
   constructor(evidence: {
     id: string;
     parcelId: string;
+    agreementId?: string;
     milestone: number;
     status?: 'review' | 'verified' | 'accepted';
     notes?: string;
@@ -22,6 +24,7 @@ export class MilestoneEvidence {
     }
     this.id = evidence.id;
     this.parcelId = evidence.parcelId;
+    this.agreementId = evidence.agreementId?.trim() ?? '';
     this.milestone = evidence.milestone;
     this.status =
       evidence.status === 'accepted' ? 'accepted' : evidence.status === 'verified' ? 'verified' : 'review';
