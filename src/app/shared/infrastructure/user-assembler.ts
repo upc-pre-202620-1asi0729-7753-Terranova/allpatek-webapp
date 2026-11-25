@@ -2,13 +2,13 @@ import { AccountUser } from '../domain/model/account-user.entity';
 import { UserResource } from './users-response';
 
 export class UserAssembler {
-  toEntityFromResource(resource: UserResource): AccountUser {
+  toEntityFromResource(resource: UserResource, profileId: number, fullName: string): AccountUser {
     return new AccountUser({
       id: Number(resource.id),
-      profileId: Number(resource.profileId),
-      role: resource.role,
-      fullName: resource.fullName,
-      email: resource.email,
+      profileId,
+      role: resource.roles?.includes('ROLE_MERCHANT') ? 'comerciante' : 'agricultor',
+      fullName,
+      email: resource.username,
     });
   }
 }

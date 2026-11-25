@@ -8,6 +8,7 @@ export const environment = {
   platformProviderAlertsEndpointPath: '/alerts',
   platformProviderProfilesEndpointPath: '/profiles',
   platformProviderUsersEndpointPath: '/users',
+  platformProviderTokensEndpointPath: '/tokens',
   platformProviderWalletsEndpointPath: '/wallets',
   weatherApiBaseUrl: 'https://api.open-meteo.com/v1/forecast',
   n8nContractWebhookUrl: 'https://foyer-phonics-pyromania.ngrok-free.dev/webhook/generar-reporte',
