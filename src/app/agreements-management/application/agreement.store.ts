@@ -109,19 +109,16 @@ export class AgreementStore {
       onDone(false);
       return;
     }
-    this.#save(
-      new Agreement({
-        id: current.id,
-        parcelId: current.parcelId,
-        merchantName: current.merchantName,
-        merchantProfileId: current.merchantProfileId,
-        merchantSigned: true,
-        farmerSigned: true,
-        createdAt: current.createdAt,
-      }),
-      true,
-      onDone,
-    );
+    this.#agreementApi.signFarmer(requestId).pipe(retry(2)).subscribe({
+      next: (saved) => {
+        this.#agreementsSignal.update((agreements) => [
+          ...agreements.filter((agreement) => agreement.id !== saved.id),
+          saved,
+        ]);
+        onDone(true);
+      },
+      error: () => onDone(false),
+    });
   }
 
   #save(next: Agreement, exists: boolean, onDone: (saved: boolean) => void): void {

@@ -19,4 +19,8 @@ export class AgreementApi extends BaseApi {
   updateAgreement(agreement: Agreement): Observable<Agreement> {
     return this.#agreementsEndpoint.update(agreement);
   }
+
+  signFarmer(id: string): Observable<Agreement> {
+    return this.#agreementsEndpoint.signFarmer(id);
+  }
 }
