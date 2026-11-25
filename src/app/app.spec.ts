@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
 import { provideTranslateService, TranslateService } from '@ngx-translate/core';
 import { App } from './app';
@@ -8,7 +9,11 @@ describe('App', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [App],
-      providers: [provideRouter(routes), provideTranslateService({ fallbackLang: 'en' })],
+      providers: [
+        provideRouter(routes),
+        provideHttpClient(),
+        provideTranslateService({ fallbackLang: 'en' }),
+      ],
     }).compileComponents();
     const translate = TestBed.inject(TranslateService);
     translate.setTranslation('en', {
