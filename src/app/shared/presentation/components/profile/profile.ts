@@ -5,10 +5,18 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { ProfileStore } from '../../../application/profile.store';
 import { SessionStore } from '../../../application/session.store';
 import { UserProfile } from '../../../domain/model/user-profile.entity';
+import {
+  activityValidators,
+  dniValidators,
+  personNameValidators,
+  phoneValidators,
+  rucValidators,
+} from '../../../domain/model/identity-fields';
+
+type ProfileField = 'fullName' | 'phone' | 'document' | 'address' | 'email' | 'company' | 'ruc' | 'activity';
 
 /**
- * Profile screen. Values come from json-server. Edit Information unlocks the
- * fields and Save Changes sends PUT /profiles/:id, as Learning Center does.
+ * Profile screen. Edit Information unlocks the fields and Save Changes sends PUT /profiles/:id.
  */
 @Component({
   selector: 'app-profile',
@@ -32,10 +40,10 @@ export class Profile {
   protected readonly merchant = () => this.#session.role() === 'comerciante';
 
   protected readonly form = this.#formBuilder.nonNullable.group({
-    fullName: ['', Validators.required],
-    phone: [''],
-    document: [''],
-    address: [''],
+    fullName: ['', personNameValidators],
+    phone: ['', phoneValidators],
+    document: ['', dniValidators],
+    address: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
     company: [''],
     ruc: [''],
@@ -43,6 +51,10 @@ export class Profile {
   });
 
   constructor() {
+    this.#store.reload();
+    effect(() => {
+      this.#syncMerchantValidators(this.merchant());
+    });
     effect(() => {
       const profile = this.#store.profile();
       if (!profile || this.editing()) {
@@ -63,31 +75,68 @@ export class Profile {
 
   protected startEditing(): void {
     this.editing.set(true);
+    this.form.markAllAsTouched();
+  }
+
+  protected markField(field: ProfileField): void {
+    this.form.controls[field].markAsDirty();
+    this.form.controls[field].markAsTouched();
+  }
+
+  protected fieldError(field: ProfileField): string | null {
+    const control = this.form.controls[field];
+    if (!this.editing() || !control.invalid || (!control.touched && !control.dirty)) {
+      return null;
+    }
+    if (control.hasError('required')) {
+      return 'validation.required';
+    }
+    if (field === 'fullName') {
+      return 'validation.name';
+    }
+    if (field === 'phone') {
+      return 'validation.phone';
+    }
+    if (field === 'document') {
+      return 'validation.dni';
+    }
+    if (field === 'email') {
+      return 'validation.email';
+    }
+    if (field === 'ruc') {
+      return 'validation.ruc';
+    }
+    if (field === 'activity') {
+      return 'validation.activity';
+    }
+    if (field === 'company') {
+      return 'validation.company';
+    }
+    return 'validation.required';
   }
 
   protected onSubmit(event: Event): void {
     event.preventDefault();
     const current = this.#store.profile();
-    if (!this.editing() || !current || this.form.invalid) {
-      this.form.markAllAsTouched();
+    if (!this.editing() || !current) {
+      return;
+    }
+    this.form.markAllAsTouched();
+    if (this.form.invalid) {
       return;
     }
     const value = this.form.getRawValue();
-    if (!value.fullName.trim()) {
-      this.form.controls.fullName.setErrors({ required: true });
-      return;
-    }
     this.#store.updateProfile(
       new UserProfile({
         id: current.id,
-        fullName: value.fullName,
-        phone: value.phone,
-        document: value.document,
-        address: value.address,
-        email: value.email,
-        company: value.company,
-        ruc: value.ruc,
-        activity: value.activity,
+        fullName: value.fullName.trim(),
+        phone: value.phone.trim(),
+        document: value.document.trim(),
+        address: value.address.trim(),
+        email: value.email.trim(),
+        company: value.company.trim(),
+        ruc: value.ruc.trim(),
+        activity: value.activity.trim(),
       }),
     );
     this.editing.set(false);
@@ -95,5 +144,14 @@ export class Profile {
 
   protected closeProfile(): void {
     void this.#router.navigate(['/profile']);
+  }
+
+  #syncMerchantValidators(merchant: boolean): void {
+    this.form.controls.company.setValidators(merchant ? Validators.required : []);
+    this.form.controls.ruc.setValidators(merchant ? rucValidators : []);
+    this.form.controls.activity.setValidators(merchant ? activityValidators : []);
+    this.form.controls.company.updateValueAndValidity({ emitEvent: false });
+    this.form.controls.ruc.updateValueAndValidity({ emitEvent: false });
+    this.form.controls.activity.updateValueAndValidity({ emitEvent: false });
   }
 }

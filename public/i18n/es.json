@@ -1,5 +1,16 @@
 {
   "lang": { "label": "Idioma" },
+  "validation": {
+    "required": "Este campo es obligatorio.",
+    "name": "El nombre solo puede tener letras, sin números.",
+    "phone": "El celular debe tener exactamente 9 dígitos, sin letras.",
+    "dni": "El DNI debe tener exactamente 8 dígitos, sin letras.",
+    "email": "Ingresa un correo válido.",
+    "address": "Ingresa la dirección.",
+    "company": "Ingresa la empresa o razón social.",
+    "ruc": "El RUC debe tener exactamente 11 dígitos, sin letras.",
+    "activity": "El giro comercial solo puede tener letras, sin números."
+  },
   "role": {
     "farmer": "Agricultor",
     "merchant": "Comerciante",
@@ -43,7 +54,10 @@
     "showPassword": "Mostrar contraseña",
     "forgot": "¿Olvidaste tu contraseña?",
     "submit": "Ingresar a la Plataforma",
+    "registered": "Cuenta creada correctamente. Ingresa con tu correo y contraseña.",
+    "required": "Ingresa tu correo y contraseña.",
     "invalid": "Correo o contraseña incorrectos.",
+    "unreachable": "No se pudo conectar con la API local.",
     "noAccount": "¿No tienes cuenta?",
     "register": "Regístrate",
     "or": "O continúa con"
@@ -53,9 +67,19 @@
     "roleTitle": "Selecciona tu Rol",
     "farmerText": "Publica parcelas y sube evidencias de cultivo.",
     "merchantText": "Alquila parcelas, deposita en custodia y aprueba hitos.",
+    "personal": "Datos personales",
     "fullName": "Nombre Completo",
+    "phone": "Teléfono / WhatsApp",
+    "document": "Documento de Identidad (DNI)",
+    "address": "Dirección / Ubicación Principal",
     "email": "Correo Electrónico",
     "emailPlaceholder": "ejemplo@allpatek.com",
+    "commercial": "Datos comerciales",
+    "commercialNote": "El agricultor verá estos datos al revisar tu solicitud de contrato.",
+    "company": "Empresa / Razón social",
+    "ruc": "RUC",
+    "activity": "Giro comercial",
+    "credentials": "Acceso a la cuenta",
     "password": "Contraseña",
     "showPassword": "Mostrar contraseña",
     "confirm": "Confirmar Contraseña",
@@ -63,7 +87,14 @@
     "showConfirm": "Mostrar confirmación de contraseña",
     "submit": "Crear Cuenta",
     "hasAccount": "¿Ya tienes cuenta?",
-    "login": "Inicia Sesión"
+    "login": "Inicia Sesión",
+    "required": "Completa nombre, teléfono, DNI, dirección y un correo válido.",
+    "merchantRequired": "Completa empresa, RUC y giro comercial.",
+    "short": "La contraseña debe tener al menos 6 caracteres.",
+    "mismatch": "Las contraseñas no coinciden.",
+    "exists": "Ese correo ya está registrado. Inicia sesión.",
+    "unreachable": "No se pudo conectar con la API local.",
+    "failed": "No se pudo crear la cuenta. Revisa que la API local esté en marcha."
   },
   "parcels": {
     "title": "Gestión de Parcelas Agrícolas",
