@@ -13,7 +13,7 @@
           class="role"
           type="button"
           [class.role--selected]="role() === 'agricultor'"
-          (click)="role.set('agricultor')"
+          (click)="chooseRole('agricultor')"
         >
           <span class="role__top">
             <span class="role__icon">
@@ -33,7 +33,7 @@
           class="role"
           type="button"
           [class.role--selected]="role() === 'comerciante'"
-          (click)="role.set('comerciante')"
+          (click)="chooseRole('comerciante')"
         >
           <span class="role__top">
             <span class="role__icon">
@@ -51,79 +51,210 @@
       </div>
     </section>
 
-    <div class="register__fields">
-      <label class="field">
-        <span class="field__label">{{ 'register.fullName' | translate }}</span>
-        <span class="field__control">
-          <input
-            type="text"
-            name="fullName"
-            autocomplete="name"
-            [value]="fullName()"
-            (input)="onFullNameInput($event)"
-          />
-        </span>
-      </label>
+    <section class="register__block">
+      <p class="register__block-title">{{ 'register.personal' | translate }}</p>
+      <div class="register__fields">
+        <label class="field">
+          <span class="field__label">{{ 'register.fullName' | translate }}</span>
+          <span class="field__control" [class.field__control--invalid]="fieldErrors().fullName">
+            <input
+              type="text"
+              name="fullName"
+              autocomplete="name"
+              [value]="fullName()"
+              (input)="onFullNameInput($event)"
+              (change)="onFullNameInput($event)"
+            />
+          </span>
+          @if (fieldErrors().fullName; as key) {
+            <span class="field-error">{{ key | translate }}</span>
+          }
+        </label>
 
-      <label class="field">
-        <span class="field__label">{{ 'register.email' | translate }}</span>
-        <span class="field__control">
-          <input
-            type="email"
-            name="email"
-            autocomplete="email"
-            [value]="email()"
-            (input)="onEmailInput($event)"
-          />
-        </span>
-      </label>
+        <label class="field">
+          <span class="field__label">{{ 'register.phone' | translate }}</span>
+          <span class="field__control" [class.field__control--invalid]="fieldErrors().phone">
+            <input
+              type="tel"
+              name="phone"
+              autocomplete="tel"
+              [value]="phone()"
+              (input)="onPhoneInput($event)"
+              (change)="onPhoneInput($event)"
+            />
+          </span>
+          @if (fieldErrors().phone; as key) {
+            <span class="field-error">{{ key | translate }}</span>
+          }
+        </label>
 
-      <label class="field">
-        <span class="field__label">{{ 'register.password' | translate }}</span>
-        <span class="field__control">
-          <input
-            name="password"
-            autocomplete="new-password"
-            [type]="passwordVisible() ? 'text' : 'password'"
-            [value]="password()"
-            (input)="onPasswordInput($event)"
-          />
-          <button
-            class="field__toggle"
-            type="button"
-            aria-label="{{ 'register.showPassword' | translate }}"
-            (click)="togglePasswordVisibility()"
-          >
-            <img src="assets/login/eye.svg" alt="" width="18" height="18" />
-          </button>
-        </span>
-      </label>
+        <label class="field">
+          <span class="field__label">{{ 'register.document' | translate }}</span>
+          <span class="field__control" [class.field__control--invalid]="fieldErrors().document">
+            <input
+              type="text"
+              name="document"
+              autocomplete="off"
+              [value]="document()"
+              (input)="onDocumentInput($event)"
+              (change)="onDocumentInput($event)"
+            />
+          </span>
+          @if (fieldErrors().document; as key) {
+            <span class="field-error">{{ key | translate }}</span>
+          }
+        </label>
 
-      <label class="field">
-        <span class="field__label">{{ 'register.confirm' | translate }}</span>
-        <span class="field__control">
-          <input
-            name="confirmPassword"
-            autocomplete="new-password"
-            placeholder="{{ 'register.confirmPlaceholder' | translate }}"
-            [type]="confirmPasswordVisible() ? 'text' : 'password'"
-            [value]="confirmPassword()"
-            (input)="onConfirmPasswordInput($event)"
-          />
-          <button
-            class="field__toggle"
-            type="button"
-            aria-label="{{ 'register.showConfirm' | translate }}"
-            (click)="toggleConfirmPasswordVisibility()"
-          >
-            <img src="assets/login/eye.svg" alt="" width="18" height="18" />
-          </button>
-        </span>
-      </label>
-    </div>
+        <label class="field">
+          <span class="field__label">{{ 'register.address' | translate }}</span>
+          <span class="field__control" [class.field__control--invalid]="fieldErrors().address">
+            <input
+              type="text"
+              name="address"
+              autocomplete="street-address"
+              [value]="address()"
+              (input)="onAddressInput($event)"
+              (change)="onAddressInput($event)"
+            />
+          </span>
+          @if (fieldErrors().address; as key) {
+            <span class="field-error">{{ key | translate }}</span>
+          }
+        </label>
+
+        <label class="field field--full">
+          <span class="field__label">{{ 'register.email' | translate }}</span>
+          <span class="field__control" [class.field__control--invalid]="fieldErrors().email">
+            <input
+              type="email"
+              name="email"
+              autocomplete="email"
+              [value]="email()"
+              (input)="onEmailInput($event)"
+              (change)="onEmailInput($event)"
+            />
+          </span>
+          @if (fieldErrors().email; as key) {
+            <span class="field-error">{{ key | translate }}</span>
+          }
+        </label>
+      </div>
+    </section>
+
+    @if (role() === 'comerciante') {
+      <section class="register__block">
+        <p class="register__block-title">{{ 'register.commercial' | translate }}</p>
+        <p class="register__block-note">{{ 'register.commercialNote' | translate }}</p>
+        <div class="register__fields">
+          <label class="field">
+            <span class="field__label">{{ 'register.company' | translate }}</span>
+            <span class="field__control" [class.field__control--invalid]="fieldErrors().company">
+              <input
+                type="text"
+                name="company"
+                autocomplete="organization"
+                [value]="company()"
+                (input)="onCompanyInput($event)"
+                (change)="onCompanyInput($event)"
+              />
+            </span>
+            @if (fieldErrors().company; as key) {
+              <span class="field-error">{{ key | translate }}</span>
+            }
+          </label>
+
+          <label class="field">
+            <span class="field__label">{{ 'register.ruc' | translate }}</span>
+            <span class="field__control" [class.field__control--invalid]="fieldErrors().ruc">
+              <input
+                type="text"
+                name="ruc"
+                autocomplete="off"
+                [value]="ruc()"
+                (input)="onRucInput($event)"
+                (change)="onRucInput($event)"
+              />
+            </span>
+            @if (fieldErrors().ruc; as key) {
+              <span class="field-error">{{ key | translate }}</span>
+            }
+          </label>
+
+          <label class="field field--full">
+            <span class="field__label">{{ 'register.activity' | translate }}</span>
+            <span class="field__control" [class.field__control--invalid]="fieldErrors().activity">
+              <input
+                type="text"
+                name="activity"
+                [value]="activity()"
+                (input)="onActivityInput($event)"
+                (change)="onActivityInput($event)"
+              />
+            </span>
+            @if (fieldErrors().activity; as key) {
+              <span class="field-error">{{ key | translate }}</span>
+            }
+          </label>
+        </div>
+      </section>
+    }
+
+    <section class="register__block">
+      <p class="register__block-title">{{ 'register.credentials' | translate }}</p>
+      <div class="register__fields">
+        <label class="field">
+          <span class="field__label">{{ 'register.password' | translate }}</span>
+          <span class="field__control">
+            <input
+              name="password"
+              autocomplete="new-password"
+              [type]="passwordVisible() ? 'text' : 'password'"
+              [value]="password()"
+              (input)="onPasswordInput($event)"
+              (change)="onPasswordInput($event)"
+            />
+            <button
+              class="field__toggle"
+              type="button"
+              aria-label="{{ 'register.showPassword' | translate }}"
+              (click)="togglePasswordVisibility()"
+            >
+              <img src="assets/login/eye.svg" alt="" width="18" height="18" />
+            </button>
+          </span>
+        </label>
+
+        <label class="field">
+          <span class="field__label">{{ 'register.confirm' | translate }}</span>
+          <span class="field__control">
+            <input
+              name="confirmPassword"
+              autocomplete="new-password"
+              placeholder="{{ 'register.confirmPlaceholder' | translate }}"
+              [type]="confirmPasswordVisible() ? 'text' : 'password'"
+              [value]="confirmPassword()"
+              (input)="onConfirmPasswordInput($event)"
+              (change)="onConfirmPasswordInput($event)"
+            />
+            <button
+              class="field__toggle"
+              type="button"
+              aria-label="{{ 'register.showConfirm' | translate }}"
+              (click)="toggleConfirmPasswordVisibility()"
+            >
+              <img src="assets/login/eye.svg" alt="" width="18" height="18" />
+            </button>
+          </span>
+        </label>
+      </div>
+    </section>
+
+    @if (errorKey()) {
+      <p class="register__error" role="alert">{{ errorKey()! | translate }}</p>
+    }
 
     <div class="register__actions">
-      <button class="register__submit" type="submit">{{ 'register.submit' | translate }}</button>
+      <button class="register__submit" type="submit" [disabled]="busy()">{{ 'register.submit' | translate }}</button>
       <p class="register__switch">
         <span>{{ 'register.hasAccount' | translate }}</span>
         <button class="link" type="button" (click)="openLogin()">{{ 'register.login' | translate }}</button>
