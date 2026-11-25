@@ -139,6 +139,29 @@
   line-height: 1.4;
 }
 
+.login__ok,
+.login__error {
+  margin: 0;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.login__ok {
+  border: 1px solid rgba(233, 196, 106, 0.45);
+  background: rgba(46, 125, 84, 0.35);
+  color: #e9c46a;
+}
+
+.login__error {
+  border: 1px solid rgba(255, 180, 168, 0.45);
+  background: rgba(180, 40, 40, 0.28);
+  color: #ffd4cc;
+}
+
 .login__submit:disabled {
   opacity: 0.6;
   cursor: default;

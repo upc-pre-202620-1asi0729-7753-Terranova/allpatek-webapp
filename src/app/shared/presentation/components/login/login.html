@@ -16,6 +16,7 @@
             autocomplete="off"
             [value]="email()"
             (input)="onEmailInput($event)"
+            (change)="onEmailInput($event)"
           />
         </span>
       </label>
@@ -30,6 +31,7 @@
             [type]="passwordVisible() ? 'text' : 'password'"
             [value]="password()"
             (input)="onPasswordInput($event)"
+            (change)="onPasswordInput($event)"
           />
           <button
             class="field__toggle"
@@ -46,8 +48,15 @@
       </div>
     </div>
 
+    @if (registered() && !errorKey()) {
+      <p class="login__ok" role="status">{{ 'login.registered' | translate }}</p>
+    }
+    @if (errorKey()) {
+      <p class="login__error" role="alert">{{ errorKey()! | translate }}</p>
+    }
+
     <div class="login__actions">
-      <button class="login__submit" type="submit">{{ 'login.submit' | translate }}</button>
+      <button class="login__submit" type="submit" [disabled]="busy()">{{ 'login.submit' | translate }}</button>
       <p class="login__switch">
         <span>{{ 'login.noAccount' | translate }}</span>
         <button class="link link--strong" type="button" (click)="openRegister()">{{ 'login.register' | translate }}</button>
