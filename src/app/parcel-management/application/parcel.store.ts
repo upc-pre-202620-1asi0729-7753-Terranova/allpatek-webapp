@@ -1,6 +1,7 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { retry } from 'rxjs';
+import { SessionStore } from '../../shared/application/session.store';
 import { Parcel } from '../domain/model/parcel.entity';
 import { ParcelApi } from '../infrastructure/parcel-api';
 
@@ -11,6 +12,7 @@ import { ParcelApi } from '../infrastructure/parcel-api';
 @Injectable({ providedIn: 'root' })
 export class ParcelStore {
   readonly #parcelApi = inject(ParcelApi);
+  readonly #session = inject(SessionStore);
   readonly #parcelsSignal = signal<Parcel[]>([]);
   readonly parcels = this.#parcelsSignal.asReadonly();
   readonly parcelCount = computed(() => this.parcels().length);
@@ -77,6 +79,12 @@ export class ParcelStore {
   }
 
   #loadParcels(): void {
+    if (!this.#session.signedIn()) {
+      this.#parcelsSignal.set([]);
+      this.#loadingSignal.set(false);
+      this.#errorSignal.set(null);
+      return;
+    }
     this.#loadingSignal.set(true);
     this.#errorSignal.set(null);
     this.#parcelApi

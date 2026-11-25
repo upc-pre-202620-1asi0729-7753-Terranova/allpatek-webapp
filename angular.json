@@ -69,7 +69,7 @@
               "buildTarget": "allpatek-webapp:build:development"
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "development"
         },
         "test": {
           "builder": "@angular/build:unit-test"
