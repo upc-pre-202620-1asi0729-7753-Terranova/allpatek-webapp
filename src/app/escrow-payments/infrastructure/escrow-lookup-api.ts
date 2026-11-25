@@ -31,10 +31,9 @@ export class EscrowLookupApi extends BaseApi {
   }
 
   updateEvidence(evidence: EscrowEvidenceRef): Observable<EscrowEvidenceRef> {
-    const url = `${environment.platformProviderApiBaseUrl}${environment.platformProviderEvidenceEndpointPath}/${evidence.id}`;
-    return this.http.put<EscrowEvidenceRef>(url, evidence).pipe(
+    const url = `${environment.platformProviderApiBaseUrl}${environment.platformProviderEvidenceEndpointPath}/${evidence.id}/release`;
+    return this.http.post<EscrowEvidenceRef>(url, {}).pipe(
       map((saved) => new EscrowEvidenceRef(saved)),
-      catchError(() => of(evidence)),
     );
   }
 
