@@ -16,6 +16,14 @@ export class ProfileApi extends BaseApi {
     return this.#profilesEndpoint.getById(id);
   }
 
+  getMe(): Observable<UserProfile> {
+    return this.#profilesEndpoint.getMe();
+  }
+
+  createProfile(profile: UserProfile): Observable<UserProfile> {
+    return this.#profilesEndpoint.createProfile(profile);
+  }
+
   updateProfile(profile: UserProfile): Observable<UserProfile> {
     return this.#profilesEndpoint.update(profile, profile.id);
   }
