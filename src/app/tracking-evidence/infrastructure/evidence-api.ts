@@ -19,4 +19,12 @@ export class EvidenceApi extends BaseApi {
   updateEvidence(evidence: MilestoneEvidence): Observable<MilestoneEvidence> {
     return this.#evidenceEndpoint.update(evidence);
   }
+
+  verifyEvidence(id: string): Observable<MilestoneEvidence> {
+    return this.#evidenceEndpoint.verify(id);
+  }
+
+  releaseEvidence(id: string): Observable<MilestoneEvidence> {
+    return this.#evidenceEndpoint.release(id);
+  }
 }

@@ -1,21 +1,17 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
-import { catchError, combineLatest, distinctUntilChanged, EMPTY, map, switchMap, tap } from 'rxjs';
+import { catchError, distinctUntilChanged, EMPTY, of, switchMap, tap } from 'rxjs';
 import { SessionStore } from '../../shared/application/session.store';
-import { ParcelRef } from '../domain/model/parcel-ref';
 import { WeatherReading } from '../domain/model/weather-reading';
-import { ParcelRefApi } from '../infrastructure/parcel-ref-api';
-import { WeatherApi, WeatherPlace } from '../infrastructure/weather-api';
+import { AlertsApi } from '../infrastructure/alerts-api';
 
 /**
- * Weather for every parcel that has latitude and longitude.
+ * Weather and climate alerts for the signed-in farmer's parcels.
  */
 @Injectable({ providedIn: 'root' })
 export class ClimateStore {
   readonly #session = inject(SessionStore);
-  readonly #parcelRefApi = inject(ParcelRefApi);
-  readonly #weather = inject(WeatherApi);
-  readonly #parcelsSignal = signal<ParcelRef[]>([]);
+  readonly #alertsApi = inject(AlertsApi);
   readonly #readingsSignal = signal<WeatherReading[]>([]);
   readonly readings = this.#readingsSignal.asReadonly();
   readonly #selectedIdSignal = signal<string | null>(null);
@@ -26,38 +22,25 @@ export class ClimateStore {
   readonly error = this.#errorSignal.asReadonly();
 
   constructor() {
-    this.#parcelRefApi
-      .getParcels()
-      .pipe(takeUntilDestroyed())
-      .subscribe({
-        next: (parcels) => this.#parcelsSignal.set(parcels),
-        error: () => this.#parcelsSignal.set([]),
-      });
-
-    combineLatest([toObservable(this.#parcelsSignal), toObservable(this.#session.profileId)])
+    toObservable(this.#session.profileId)
       .pipe(
-        map(([parcels]) => this.#places(parcels)),
-        distinctUntilChanged(
-          (left, right) =>
-            left.map((place) => `${place.parcelId}:${place.latitude},${place.longitude}`).join('|') ===
-            right.map((place) => `${place.parcelId}:${place.latitude},${place.longitude}`).join('|'),
-        ),
+        distinctUntilChanged(),
         tap(() => {
           this.#loadingSignal.set(true);
           this.#errorSignal.set(false);
         }),
-        switchMap((places) => {
-          if (!places.length) {
+        switchMap(() => {
+          if (!this.#session.token()) {
             this.#readingsSignal.set([]);
             this.#selectedIdSignal.set(null);
             this.#loadingSignal.set(false);
             return EMPTY;
           }
-          return this.#weather.getForecast(places).pipe(
+          return this.#alertsApi.getReadings().pipe(
             catchError(() => {
               this.#errorSignal.set(true);
               this.#loadingSignal.set(false);
-              return EMPTY;
+              return of([] as WeatherReading[]);
             }),
           );
         }),
@@ -74,24 +57,5 @@ export class ClimateStore {
 
   select(parcelId: string): void {
     this.#selectedIdSignal.set(parcelId);
-  }
-
-  #places(parcels: ParcelRef[]): WeatherPlace[] {
-    const ownerId = this.#session.profileId();
-    return parcels.flatMap((parcel) => {
-      if (ownerId == null || parcel.ownerId !== ownerId) {
-        return [];
-      }
-      const [latitudeText = '', longitudeText = ''] = parcel.location.split(',');
-      const latitude = Number(latitudeText.trim());
-      const longitude = Number(longitudeText.trim());
-      if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) {
-        return [];
-      }
-      if (latitude < -90 || latitude > 90 || longitude < -180 || longitude > 180) {
-        return [];
-      }
-      return [{ parcelId: parcel.id, parcelName: parcel.name, latitude, longitude }];
-    });
   }
 }

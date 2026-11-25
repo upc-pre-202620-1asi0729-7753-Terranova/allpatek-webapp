@@ -26,15 +26,15 @@ export class UserProfile implements BaseEntity {
     ruc?: string;
     activity?: string;
   }) {
-    if (!profile.fullName.trim()) {
+    if (!profile.fullName?.trim()) {
       throw new Error('Profile name must not be empty.');
     }
     this.id = Number(profile.id);
     this.fullName = profile.fullName.trim();
-    this.phone = profile.phone.trim();
-    this.document = profile.document.trim();
-    this.address = profile.address.trim();
-    this.email = profile.email.trim();
+    this.phone = profile.phone?.trim() ?? '';
+    this.document = profile.document?.trim() ?? '';
+    this.address = profile.address?.trim() ?? '';
+    this.email = profile.email?.trim() ?? '';
     this.company = profile.company?.trim() ?? '';
     this.ruc = profile.ruc?.trim() ?? '';
     this.activity = profile.activity?.trim() ?? '';

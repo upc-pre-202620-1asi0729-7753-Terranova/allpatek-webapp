@@ -34,8 +34,6 @@ export class WalletAssembler {
       id: entity.id,
       profileId: entity.profileId,
       holder: entity.holder,
-      number: entity.number,
-      cvv: entity.cvv,
       last4: entity.last4,
       expiry: entity.expiry,
       brand: entity.brand,

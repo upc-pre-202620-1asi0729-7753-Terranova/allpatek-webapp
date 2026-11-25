@@ -14,6 +14,7 @@ export class EvidenceAssembler {
       return new MilestoneEvidence({
         id: String(resource.id),
         parcelId: resource.parcelId,
+        agreementId: resource.agreementId,
         milestone: resource.milestone,
         status:
           resource.status === 'accepted' ? 'accepted' : resource.status === 'verified' ? 'verified' : 'review',
@@ -30,6 +31,7 @@ export class EvidenceAssembler {
     return {
       id: entity.id,
       parcelId: entity.parcelId,
+      agreementId: entity.agreementId,
       milestone: entity.milestone,
       status: entity.status,
       notes: entity.notes,

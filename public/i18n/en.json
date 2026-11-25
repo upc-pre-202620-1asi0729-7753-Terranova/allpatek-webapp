@@ -1,5 +1,16 @@
 {
   "lang": { "label": "Language" },
+  "validation": {
+    "required": "This field is required.",
+    "name": "The name can only contain letters, no numbers.",
+    "phone": "The phone number must have exactly 9 digits, no letters.",
+    "dni": "The ID must have exactly 8 digits, no letters.",
+    "email": "Enter a valid email.",
+    "address": "Enter the address.",
+    "company": "Enter the company or legal name.",
+    "ruc": "The tax ID (RUC) must have exactly 11 digits, no letters.",
+    "activity": "The line of business can only contain letters, no numbers."
+  },
   "role": {
     "farmer": "Farmer",
     "merchant": "Merchant",
@@ -43,7 +54,10 @@
     "showPassword": "Show password",
     "forgot": "Forgot your password?",
     "submit": "Enter the Platform",
+    "registered": "Account created. Sign in with your email and password.",
+    "required": "Enter your email and password.",
     "invalid": "Incorrect email or password.",
+    "unreachable": "Could not reach the local API.",
     "noAccount": "Don't have an account?",
     "register": "Sign up",
     "or": "Or continue with"
@@ -53,9 +67,19 @@
     "roleTitle": "Select your Role",
     "farmerText": "Publish parcels and upload crop evidence.",
     "merchantText": "Lease parcels, deposit in escrow, and approve milestones.",
+    "personal": "Personal details",
     "fullName": "Full Name",
+    "phone": "Phone / WhatsApp",
+    "document": "Identity Document (DNI)",
+    "address": "Address / Main Location",
     "email": "Email",
     "emailPlaceholder": "example@allpatek.com",
+    "commercial": "Commercial details",
+    "commercialNote": "The farmer will see these details when reviewing your contract request.",
+    "company": "Company / Legal name",
+    "ruc": "Tax ID (RUC)",
+    "activity": "Line of business",
+    "credentials": "Account access",
     "password": "Password",
     "showPassword": "Show password",
     "confirm": "Confirm Password",
@@ -63,7 +87,14 @@
     "showConfirm": "Show password confirmation",
     "submit": "Create Account",
     "hasAccount": "Already have an account?",
-    "login": "Sign in"
+    "login": "Sign in",
+    "required": "Enter your name, phone, ID, address, and a valid email.",
+    "merchantRequired": "Enter company, tax ID, and line of business.",
+    "short": "The password must have at least 6 characters.",
+    "mismatch": "The passwords do not match.",
+    "exists": "That email is already registered. Sign in instead.",
+    "unreachable": "Could not reach the local API.",
+    "failed": "The account could not be created. Check that the local API is running."
   },
   "parcels": {
     "title": "Agricultural Parcel Management",

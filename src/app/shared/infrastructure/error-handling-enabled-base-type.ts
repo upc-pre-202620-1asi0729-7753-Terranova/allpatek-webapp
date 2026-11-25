@@ -12,7 +12,7 @@ export abstract class ErrorHandlingEnabledBaseType {
       } else {
         errorMessage = `${operation}: ${error.status || 'Unexpected error'}`;
       }
-      return throwError(() => new Error(errorMessage));
+      return throwError(() => Object.assign(new Error(errorMessage), { status: error.status }));
     };
   }
 }

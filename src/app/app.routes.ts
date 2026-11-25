@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { requireSession } from './shared/application/session.guard';
+import { requireLiveSession, requireSession } from './shared/application/session.guard';
 import { Shell } from './shared/presentation/components/shell/shell';
 
 const login = () => import('./shared/presentation/components/login/login').then((m) => m.Login);
@@ -27,7 +27,8 @@ export const routes: Routes = [
   {
     path: '',
     component: Shell,
-    canActivate: [requireSession],
+    canActivate: [requireLiveSession],
+    canActivateChild: [requireSession],
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'parcels' },
       { path: 'parcels', loadChildren: parcelRoutes },

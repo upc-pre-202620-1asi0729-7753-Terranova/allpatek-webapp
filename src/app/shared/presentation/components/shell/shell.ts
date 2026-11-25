@@ -35,7 +35,9 @@ export class Shell {
   readonly #profile = inject(ProfileStore);
 
   protected readonly role = this.#session.role;
-  protected readonly displayName = computed(() => this.#profile.profile()?.fullName ?? '');
+  protected readonly displayName = computed(
+    () => this.#profile.profile()?.fullName || this.#session.fullName(),
+  );
   protected readonly initials = computed(() => {
     const parts = this.displayName().split(/\s+/).filter(Boolean);
     return `${parts[0]?.[0] ?? ''}${parts[1]?.[0] ?? ''}`.toUpperCase();
@@ -127,6 +129,7 @@ export class Shell {
   });
 
   protected logout(): void {
+    this.#profile.forget();
     this.#session.clear();
     void this.#router.navigate(['/login']);
   }

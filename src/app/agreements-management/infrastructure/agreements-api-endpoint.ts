@@ -42,4 +42,17 @@ export class AgreementsApiEndpoint extends ErrorHandlingEnabledBaseType {
       catchError(this.handleError('Failed to update agreement')),
     );
   }
+
+  signFarmer(id: string): Observable<Agreement> {
+    return this.http.post<AgreementResource>(`${this.#endpointUrl}/${id}/farmer-signature`, {}).pipe(
+      map((updated) => {
+        const entity = this.#assembler.toEntityFromResource(updated);
+        if (!entity) {
+          throw new Error('Failed to sign agreement');
+        }
+        return entity;
+      }),
+      catchError(this.handleError('Failed to sign agreement')),
+    );
+  }
 }
