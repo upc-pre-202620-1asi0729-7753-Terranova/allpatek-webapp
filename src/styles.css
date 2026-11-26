@@ -14,3 +14,11 @@ body {
   font-family: "Geist", sans-serif;
   background: #1b3a30;
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+}
