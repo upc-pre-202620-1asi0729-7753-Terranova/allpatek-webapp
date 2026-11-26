@@ -286,3 +286,11 @@
     grid-template-columns: 1fr;
   }
 }
+
+.gallery__thumbs button {
+  transition: opacity 0.2s ease;
+}
+
+.gallery__thumbs button:not(.is-active):hover {
+  opacity: 0.85;
+}
