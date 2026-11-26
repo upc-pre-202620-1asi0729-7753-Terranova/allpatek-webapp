@@ -173,3 +173,11 @@
 .card--link:hover {
   transform: translateY(-2px);
 }
+
+.card__photo {
+  transition: filter 0.2s ease;
+}
+
+.card--link:hover .card__photo {
+  filter: brightness(1.06);
+}
