@@ -57,7 +57,7 @@
     "registered": "Cuenta creada correctamente. Ingresa con tu correo y contraseña.",
     "required": "Ingresa tu correo y contraseña.",
     "invalid": "Correo o contraseña incorrectos.",
-    "unreachable": "No se pudo conectar con la API local.",
+    "unreachable": "No se pudo conectar con el servidor.",
     "noAccount": "¿No tienes cuenta?",
     "register": "Regístrate",
     "or": "O continúa con"
@@ -93,8 +93,8 @@
     "short": "La contraseña debe tener al menos 6 caracteres.",
     "mismatch": "Las contraseñas no coinciden.",
     "exists": "Ese correo ya está registrado. Inicia sesión.",
-    "unreachable": "No se pudo conectar con la API local.",
-    "failed": "No se pudo crear la cuenta. Revisa que la API local esté en marcha."
+    "unreachable": "No se pudo conectar con el servidor.",
+    "failed": "No se pudo crear la cuenta. Inténtalo de nuevo."
   },
   "parcels": {
     "title": "Gestión de Parcelas Agrícolas",

@@ -57,7 +57,7 @@
     "registered": "Account created. Sign in with your email and password.",
     "required": "Enter your email and password.",
     "invalid": "Incorrect email or password.",
-    "unreachable": "Could not reach the local API.",
+    "unreachable": "Could not reach the server.",
     "noAccount": "Don't have an account?",
     "register": "Sign up",
     "or": "Or continue with"
@@ -93,8 +93,8 @@
     "short": "The password must have at least 6 characters.",
     "mismatch": "The passwords do not match.",
     "exists": "That email is already registered. Sign in instead.",
-    "unreachable": "Could not reach the local API.",
-    "failed": "The account could not be created. Check that the local API is running."
+    "unreachable": "Could not reach the server.",
+    "failed": "The account could not be created. Please try again."
   },
   "parcels": {
     "title": "Agricultural Parcel Management",
