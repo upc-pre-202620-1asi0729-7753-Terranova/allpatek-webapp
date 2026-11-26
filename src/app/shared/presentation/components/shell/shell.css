@@ -236,3 +236,13 @@
   color: #9ca3af;
 }
 
+.nav a,
+.logout {
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav a:hover,
+.logout:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+}
