@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  platformProviderApiBaseUrl: 'https://allpatek-platform.onrender.com/api/v1',
+  platformProviderApiBaseUrl: 'https://allpatek.proyectaconsultora.com/api/v1',
   platformProviderParcelsEndpointPath: '/parcels',
   platformProviderAgreementsEndpointPath: '/agreements',
   platformProviderEscrowEndpointPath: '/escrow',
