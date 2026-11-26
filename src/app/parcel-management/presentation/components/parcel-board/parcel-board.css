@@ -124,3 +124,11 @@
     grid-template-columns: 1fr;
   }
 }
+
+.board__search {
+  transition: border-color 0.2s ease;
+}
+
+.board__search:focus-within {
+  border-color: #52b788;
+}
