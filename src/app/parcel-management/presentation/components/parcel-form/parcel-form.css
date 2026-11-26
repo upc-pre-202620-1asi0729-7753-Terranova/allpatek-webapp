@@ -431,3 +431,13 @@
     flex-wrap: wrap;
   }
 }
+
+.form input,
+.form select {
+  transition: border-color 0.2s ease;
+}
+
+.form input:focus,
+.form select:focus {
+  border-color: #52b788;
+}
