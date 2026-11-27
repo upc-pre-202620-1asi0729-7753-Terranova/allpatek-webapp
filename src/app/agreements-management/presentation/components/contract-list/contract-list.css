@@ -113,3 +113,28 @@
   background: transparent !important;
   color: #52b788 !important;
 }
+
+@media screen and (max-width: 640px) {
+  .request {
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 16px 12px;
+  }
+
+  .request__text {
+    flex: 1 1 160px;
+    overflow-wrap: anywhere;
+  }
+
+  .request__actions {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .request button {
+    flex: 1 1 150px;
+    min-height: 44px;
+    height: auto;
+    padding-block: 10px;
+  }
+}
