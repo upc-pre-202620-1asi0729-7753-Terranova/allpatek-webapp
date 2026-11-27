@@ -391,3 +391,53 @@
     align-items: flex-start;
   }
 }
+
+@media screen and (max-width: 640px) {
+  .wallet,
+  .contract__head,
+  .timeline__row {
+    flex-wrap: wrap;
+  }
+
+  .wallet > div,
+  .summary article,
+  .meta > div,
+  .hito,
+  .merchant article {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .wallet a,
+  .merchant button,
+  .merchant a {
+    min-height: 44px;
+    height: auto;
+    padding-block: 6px;
+    line-height: 1.4;
+  }
+
+  .wallet a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+  }
+
+  .merchant div {
+    width: 100%;
+  }
+
+  .merchant button,
+  .merchant a {
+    flex: 1 1 140px;
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .milestones {
+    grid-template-columns: 1fr;
+  }
+}
