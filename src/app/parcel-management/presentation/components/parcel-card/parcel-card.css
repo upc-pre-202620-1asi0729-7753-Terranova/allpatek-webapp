@@ -181,3 +181,30 @@
 .card--link:hover .card__photo {
   filter: brightness(1.06);
 }
+
+@media screen and (max-width: 760px) {
+  .card__heading h3 {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .facts div {
+    flex-wrap: wrap;
+    gap: 4px 12px;
+  }
+
+  .facts dd {
+    max-width: 100%;
+    margin-left: auto;
+    overflow-wrap: anywhere;
+  }
+
+  .card__actions {
+    flex-wrap: wrap;
+  }
+
+  .card__actions button {
+    flex: 1 1 110px;
+    min-height: 44px;
+  }
+}

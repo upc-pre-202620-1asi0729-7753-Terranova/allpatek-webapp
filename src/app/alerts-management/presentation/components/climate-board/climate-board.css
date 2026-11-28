@@ -280,4 +280,42 @@
 
 @media screen and (max-width: 640px) {
   .metrics { grid-template-columns: 1fr; }
+
+  .places {
+    flex-direction: column;
+    overflow-x: visible;
+  }
+
+  .places button {
+    flex-basis: auto;
+    width: 100%;
+  }
+
+  .places--single button {
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 16px 18px;
+  }
+
+  .places span,
+  .places small,
+  .places em {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .metrics article,
+  .alert > div {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .alerts {
+    padding: 16px 12px;
+  }
+
+  .alert {
+    gap: 10px;
+    padding: 12px;
+  }
 }

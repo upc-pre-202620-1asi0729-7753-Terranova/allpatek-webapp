@@ -432,6 +432,60 @@
   }
 }
 
+@media screen and (max-width: 640px) {
+  .panel {
+    padding: 16px 12px;
+  }
+
+  .steps__item {
+    min-width: 0;
+    white-space: normal;
+  }
+
+  .steps__item span {
+    flex-shrink: 0;
+  }
+
+  .form label,
+  .control input,
+  .control select,
+  .crops__entry input {
+    min-width: 0;
+  }
+
+  .crops__entry {
+    flex-wrap: wrap;
+  }
+
+  .crops__entry input {
+    flex-basis: 160px;
+  }
+
+  .thumbs {
+    flex-wrap: wrap;
+  }
+
+  .form__actions {
+    flex-direction: column;
+  }
+
+  .form input,
+  .form select,
+  .control,
+  .locate,
+  .crops__entry button,
+  .cancel,
+  .save {
+    min-height: 44px;
+  }
+
+  .control input,
+  .control select {
+    height: 100%;
+    min-height: 0;
+  }
+}
+
 .form input,
 .form select {
   transition: border-color 0.2s ease;

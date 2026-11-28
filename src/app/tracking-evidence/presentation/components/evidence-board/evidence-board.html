@@ -32,10 +32,10 @@
     </div>
     @for (item of records(); track item.id; let index = $index) {
       <div class="row">
-        <span class="row__id">{{ index + 1 }}</span>
-        <span>{{ item.date }}</span>
-        <strong>{{ item.parcel }}</strong>
-        <span>{{ item.type | translate }}</span>
+        <span class="row__id" [attr.data-label]="'evidence.id' | translate">{{ index + 1 }}</span>
+        <span [attr.data-label]="'evidence.date' | translate">{{ item.date }}</span>
+        <strong [attr.data-label]="'evidence.parcel' | translate">{{ item.parcel }}</strong>
+        <span [attr.data-label]="'evidence.type' | translate">{{ item.type | translate }}</span>
         <em [class]="item.status === 'verified' ? 'badge badge--ok' : 'badge'">
           {{ ('evidence.status.' + item.status) | translate }}
         </em>

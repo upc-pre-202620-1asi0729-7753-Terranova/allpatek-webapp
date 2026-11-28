@@ -163,3 +163,45 @@
     flex-direction: column;
   }
 }
+
+@media screen and (max-width: 980px) {
+  .row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    min-width: 0;
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .row--head {
+    display: none;
+  }
+
+  .row > * {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .row > strong,
+  .row > span:nth-child(4) {
+    grid-column: 1 / -1;
+  }
+
+  .row [data-label]::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 4px;
+    color: #9ca3af;
+    font-size: 11px;
+    font-weight: 500;
+  }
+
+  .row button {
+    width: 44px;
+    height: 44px;
+  }
+
+  .empty {
+    margin: 0;
+    padding: 16px;
+  }
+}
